@@ -7,19 +7,25 @@ import math
 from datetime import datetime
 
 
-nb_persons = 1000
-nb_csv_file =  10
+eval_nb_persons = 1000
+eval_nb_csv_file =  10
 
+# nb_sc_starting_kit= 2
 
 
 ##### generate folders 
 
 path_groundtruth="data_groundtruth/"
-groundtruth_file = "truth.json"
-
+groundtruth_file = path_groundtruth+"truth.json"
+Starting_ground_truth = path_groundtruth+"starting_truth.json"
 
 path_csv = "data_csved/"
 csv_base_name="file"
+
+path_csv_starting_kit = "starting_csv/"
+
+# path_starting_kit="../starting_kit/"
+# starting_kit_data
 
 
 if not os.path.exists(path_groundtruth):
@@ -27,6 +33,9 @@ if not os.path.exists(path_groundtruth):
 
 if not os.path.exists(path_csv):
     os.makedirs(path_csv)
+
+if not os.path.exists(path_csv_starting_kit):
+    os.makedirs(path_csv_starting_kit)
 
 
 
@@ -60,7 +69,7 @@ def remove_data(dic_pers,nb_missing_datas=200):
     return dic_pers
 
 def write_groundtruth_in_json(dic_pers,groundtruth_file):
-    json_pers = json.dumps(dic_pers, indent=4,  ensure_ascii=False)
+    json_pers = json.dumps(dic_pers, indent=2, sort_keys=True,  ensure_ascii=False)
 
     with open(groundtruth_file,"w") as f :
         f.write(json_pers)
@@ -75,9 +84,10 @@ def write_groundtruth_in_json(dic_pers,groundtruth_file):
 ### Genereate random splits
 def create_random_split(dic_pers,nb_file):
     rand_list =   [random.random() for x in range(nb_file)]
+
     result = [ math.floor(i * len(dic_pers) / sum(rand_list)) for i in rand_list ] 
     for i in range(len(dic_pers) - sum(result)): 
-        result[random.randint(0,3)] += 1
+        result[random.randint(0,nb_file-1)] += 1
     return(result)
 
 def random_split(dic_pers,nb_file):
@@ -140,22 +150,52 @@ def write_csv(file_name,str2write):
 ##############
 
 
+#### generate evaluation datas: 
 
-dic_pers = generate_groundtruth(nb_persons)
+dic_pers = generate_groundtruth(eval_nb_persons)
 dic_pers = remove_data(dic_pers,200)
+dic_pers= {int(k):v for k,v in dic_pers.items()}
+
 write_groundtruth_in_json(dic_pers,groundtruth_file)
 
-list_split = random_split(dic_pers,nb_csv_file)
+list_split = random_split(dic_pers,eval_nb_csv_file)
 
 
-for i in range(0,nb_csv_file) : 
+for i in range(0,eval_nb_csv_file) : 
     file_name = path_csv+csv_base_name+str(i)+".csv"
-    # l in list_split : 
+
     if(random.random()<0.1 ):
         add_quote = False
     else : 
         add_quote = True
     str_file = to_str_csv_format(dic_pers,list_split[i],add_quote)
+    write_csv(file_name,str_file)
+
+
+
+
+
+#### generate starting datas:
+starting_nb_persons = 20
+starting_nb_csv_file =2
+
+starting_dic_pers = generate_groundtruth(starting_nb_persons)
+starting_dic_pers = remove_data(starting_dic_pers,5)
+starting_dic_pers= {int(k):v for k,v in starting_dic_pers.items()}
+
+write_groundtruth_in_json(starting_dic_pers,groundtruth_file)
+
+starting_list_split = random_split(starting_dic_pers,starting_nb_csv_file)
+
+
+for i in range(0,starting_nb_csv_file) : 
+    file_name = path_csv_starting_kit+csv_base_name+str(i)+".csv"
+
+    if(i ==0) : 
+        add_quote = True
+    else : 
+        add_quote = False
+    str_file = to_str_csv_format(starting_dic_pers,starting_list_split[i],add_quote)
     write_csv(file_name,str_file)
 
 # print(json.dumps(dic_pers, indent=4,  ensure_ascii=False))
