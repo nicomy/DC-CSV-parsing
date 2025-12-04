@@ -36,7 +36,7 @@ echo "Ingestion progam done"
 
 
 echo "Running Scoring Program"
-sudo docker run --rm  -v $PWD/scoring_program:/app/program  -v $PWD/data/data_groundtruth:/app/data/data_groundtruth -v $PWD/data/data_csved:/app/data/data_csved -v $PWD/test_output:/app/output   -w /app/program     -v $PWD/test_output:/app/input     $docker_name  python /app/program/scoring.py /app/input /app/output /app/program #>> logs
+sudo docker run --rm  -v $PWD/scoring_program:/app/program  -v $PWD/data/data_groundtruth:/app/data/data_groundtruth -v $PWD/data/data_csved:/app/data/data_csved -v $PWD/test_output:/app/output   -w /app/program     -v $PWD/test_output:/app/input     $docker_name  python /app/program/scoring.py /app/input /app/output /app/output #>> logs
 echo "Scoring program done"
 
 

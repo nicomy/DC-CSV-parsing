@@ -8,3 +8,7 @@ starting_kit/submissions/*
 starting_kit/submissions*
 
 *.json
+
+test_output*
+
+*.txt

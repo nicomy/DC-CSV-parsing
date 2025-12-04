@@ -39,7 +39,7 @@ python ingestion_program/ingestion.py \
 python scoring_program/scoring.py  \
     test_output \
     test_output \
-    scoring_program
+    test_output
 
 # Rscript ingestion_program/ingestion.R \
 #     ingestion_program \

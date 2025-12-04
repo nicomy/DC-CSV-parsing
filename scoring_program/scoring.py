@@ -38,16 +38,16 @@ print("")
 
 
 def percentage_of_correct_rows(dic_truth, dic_pred):
-    print("evaluatig results")
+    # print("evaluatig results")
     nb_total_rows = len(dic_truth)
     nb_correct_rows = 0 
     for id,dic_truth_values in dic_truth.items():
-        print(dic_truth_values)
+        # print(dic_truth_values)
         if id not in dic_pred : 
             continue
         dic_pred_values = dic_pred[id]
-        print(dic_pred_values)
-        print()
+        # print(dic_pred_values)
+        # print()
         if dic_truth_values == dic_pred_values :
             nb_correct_rows +=1
     print(nb_correct_rows)
