@@ -1,0 +1,7 @@
+*.csv
+*.json
+data_csved/
+data_groundtruth/
+*.zip
+
+starting_kit/submissions*

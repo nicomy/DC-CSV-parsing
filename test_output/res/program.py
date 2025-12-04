@@ -1,0 +1,1 @@
+../../starting_kit/submissions/program.py

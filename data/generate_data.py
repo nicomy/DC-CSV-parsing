@@ -23,6 +23,7 @@ path_csv = "data_csved/"
 csv_base_name="file"
 
 path_csv_starting_kit = "starting_csv/"
+starting_groundtruth_file = path_csv_starting_kit+ os.sep + "starting_truth.json"
 
 # path_starting_kit="../starting_kit/"
 # starting_kit_data
@@ -183,7 +184,7 @@ starting_dic_pers = generate_groundtruth(starting_nb_persons)
 starting_dic_pers = remove_data(starting_dic_pers,5)
 starting_dic_pers= {int(k):v for k,v in starting_dic_pers.items()}
 
-write_groundtruth_in_json(starting_dic_pers,groundtruth_file)
+write_groundtruth_in_json(starting_dic_pers,starting_groundtruth_file)
 
 starting_list_split = random_split(starting_dic_pers,starting_nb_csv_file)
 

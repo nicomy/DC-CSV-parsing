@@ -1,1 +1,1 @@
-command: Rscript $ingestion_program/ingestion.R $ingestion_program $input $output $submission_program 
+command: python $ingestion_program/ingestion.R $ingestion_program $input $output $submission_program 

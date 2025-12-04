@@ -28,8 +28,8 @@ def program(list_rows_one_file):
     id = list_column[0]
     dic_results[id] = {"first_name": list_column[1],
                        "last_name": list_column[2],
-                       "adress": list_column[3],
-                       "date": list_column[4]}
+                       "adress": list_column[3].replace("\\n","\n"),
+                       "date": list_column[4].removesuffix("\n")}
 
 
     # exemple  of dictionnary output 
