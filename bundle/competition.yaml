@@ -1,11 +1,11 @@
 version: '2'
 title: Gricad parsing CSV Challenge
-docker_image: hombergn/hadaca3_final_light
+docker_image: python
 # queue:  a05e3a5f-09df-40e3-978e-02f147289877 
 description: Gricad parsing CSV Challenge
 registration_auto_approve: true
 enable_detailed_results: true
-image: CSV_to_JSON.pdf
+image: csv_2_json.drawio.png
 terms: terms.md
 make_programs_available: false
 make_input_data_available: false
@@ -25,9 +25,9 @@ pages:
 tasks:
 - index: 0
   name: Main Task
-  description: LIGHT COMETH data challenge
-  reference_data: ground_truth_phase1.zip 
-  input_data: input_data_phase1.zip
+  description: Gricad CSV data challenge
+  reference_data: ground_truth.zip 
+  input_data: input_data.zip
   scoring_program: scoring_program.zip
   ingestion_program: ingestion_program.zip
 solutions: []
@@ -38,7 +38,7 @@ phases:
   # start: '2024-02-20 '
   start: '2024-11-29 '
   # end: '2024-03-20 10:40'
-  end: '2030-12-03 17:30'
+  # end: '2030-12-03 17:30'
   max_submissions_per_day: 100
   max_submissions: 100
   execution_time_limit: 600000

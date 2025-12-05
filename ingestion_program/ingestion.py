@@ -15,16 +15,16 @@ args = parser.parse_args()
 
 
 print("Ingestion Program :")
-print(os.listdir(args.ingestion_program))
+print(list(os.walk(args.ingestion_program)))
 print("")
 print("Input :")
-print(os.listdir(args.input))
+print(list(os.walk(args.input)))
 print("")
 print("Output :")
-print(os.listdir(args.output))
+print(list(os.walk(args.output)))
 print("")
 print("Submission Program :")
-print(os.listdir(args.submission_program))
+print(list(os.walk(args.submission_program)))
 print("")
 
 ## output files

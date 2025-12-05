@@ -11,9 +11,9 @@ import json
 
 
 parser = argparse.ArgumentParser("Programme ingestion")
-parser.add_argument("program", help="Directory where the ingestion program is located ", type=str)
 parser.add_argument("input", help="Input data directory ", type=str)
 parser.add_argument("output", help="Output directory (where predictions are written)", type=str)
+parser.add_argument("program", help="Directory where the ingestion program is located ", type=str)
 args = parser.parse_args()
 
 
@@ -25,13 +25,13 @@ args = parser.parse_args()
 # program ="test_output"
 
 print("Input :")
-print(os.listdir(args.input))
+print(list(os.walk(args.input)))
 print("")
 print("Output :")
-print(os.listdir(args.output))
+print(list(os.walk(args.output)))
 print("")
 print("Program :")
-print(os.listdir(args.program))
+print(list(os.walk(args.program)))
 print("")
 
 ###  EVALUATION function

@@ -1,1 +1,1 @@
-command: python $program/scoring.R $input $output $program
+command: python $program/scoring.py $input $output $program
