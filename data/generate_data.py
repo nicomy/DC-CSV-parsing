@@ -41,7 +41,7 @@ if not os.path.exists(path_csv_starting_kit):
 ########## Shitify 
 
 original_date_format='%Y-%m-%d'
-list_date_format= ['%d/%m/%Y','%m/%d/%Y','%Y:%m:%d:00:00']
+list_date_format= ['%d/%m/%Y','%m/%d/%Y','%Y:%m:%d:00:00',original_date_format]
 
 
 
