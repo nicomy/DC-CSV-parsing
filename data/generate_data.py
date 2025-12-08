@@ -10,8 +10,6 @@ from datetime import datetime
 eval_nb_persons = 1000
 eval_nb_csv_file =  10
 
-# nb_sc_starting_kit= 2
-
 
 ##### generate folders 
 
@@ -38,6 +36,12 @@ if not os.path.exists(path_csv):
 if not os.path.exists(path_csv_starting_kit):
     os.makedirs(path_csv_starting_kit)
 
+
+
+########## Shitify 
+
+original_date_format='%Y-%m-%d'
+list_date_format= ['%d/%m/%Y','%m/%d/%Y','%Y:%m:%d:00:00']
 
 
 
@@ -106,26 +110,28 @@ def random_split(dic_pers,nb_file):
 
 
 ### Shitify functions : 
-def change_date_format(str_date): 
-    if (str_date ==''):
+def change_date_format(str_date_origin,str_format_output,original_date_format=original_date_format): 
+    if (str_date_origin ==''):
         return('')
     else : 
-        list_date_format= ['%d/%m/%Y','%m/%d/%Y','%Y:%m:%d:00:00']
-        return(datetime.strptime(str_date, '%Y-%m-%d').strftime(random.sample(list_date_format,1)[0]))
+        return(datetime.strptime(str_date_origin,original_date_format ).strftime(str_format_output))
 
 
 
 
 
 #### format to str and csv format. 
-def to_str_csv_format(dic_pers,list_id,add_quote=True,change_dates_format_chance=0.25):
+def to_str_csv_format(dic_pers,list_id,add_quote=True,str_date_format=original_date_format):
     str_row = ""
-    for id in list_id:
-        
-        # chance to change the date format
-        if(random.random()<change_dates_format_chance ):
-            dic_pers[id]["date"] = change_date_format(dic_pers[id]["date"])
 
+
+    for id in list_id:
+        # chance to change the date format
+        # if(random.random()<change_dates_format_chance ):
+        #     dic_pers[id]["date"] = change_date_format(dic_pers[id]["date"])
+        
+        
+        dic_pers[id]["date"] = change_date_format(dic_pers[id]["date"],str_date_format)
         dic_pers[id]['adress'] = dic_pers[id]['adress'].replace('\n','\\n')
 
         list_row = list(dic_pers[id].values())
@@ -164,12 +170,13 @@ list_split = random_split(dic_pers,eval_nb_csv_file)
 
 for i in range(0,eval_nb_csv_file) : 
     file_name = path_csv+csv_base_name+str(i)+".csv"
-
     if(random.random()<0.1 ):
         add_quote = False
     else : 
         add_quote = True
-    str_file = to_str_csv_format(dic_pers,list_split[i],add_quote)
+        
+    str_date_format= random.sample(list_date_format,1)[0]
+    str_file = to_str_csv_format(dic_pers,list_split[i],add_quote,str_date_format)
     write_csv(file_name,str_file)
 
 
@@ -194,9 +201,12 @@ for i in range(0,starting_nb_csv_file) :
 
     if(i ==0) : 
         add_quote = True
+        str_date_format = original_date_format
     else : 
         add_quote = False
-    str_file = to_str_csv_format(starting_dic_pers,starting_list_split[i],add_quote)
+        str_date_format= random.sample(list_date_format,1)[0]
+
+    str_file = to_str_csv_format(starting_dic_pers,starting_list_split[i],add_quote,original_date_format)
     write_csv(file_name,str_file)
 
 # print(json.dumps(dic_pers, indent=4,  ensure_ascii=False))
