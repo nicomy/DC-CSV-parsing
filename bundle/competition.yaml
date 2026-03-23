@@ -12,8 +12,8 @@ make_input_data_available: false
 pages:
 - title: Overview
   file: overview.md
-# - title: How do I start?
-#   file: how-do-i-start.md
+- title: How do I start?
+  file: how-do-i-start.md
 # - title: Submission
 #   file: submission.md
 # - title: Evaluation and scoring
@@ -43,7 +43,7 @@ phases:
   max_submissions: 100
   execution_time_limit: 600000
   auto_migrate_to_this_phase: false
-  hide_output: false
+  hide_output: true
   starting_kit: starting_kit.zip
   tasks:
   - 0

@@ -28,13 +28,19 @@ python generate_data.py
 
 idea: 
 - column names with several languages or even no name 
+- change delimiter
+- doublon
 - order of column are mixed
 - missing datas 
 - remove comas
-- change date format
+- change date format (add letter)
+- 
 
 To add shitify ideas, edit the file : 
 "data/generate_data.py"
+
+
+## differentes scroring. 
 
 
 ## Some explanations (in French ^^): 
