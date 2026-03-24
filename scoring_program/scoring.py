@@ -67,7 +67,7 @@ def percentage_of_correct_rows(dic_truth, dic_pred):
 
 
 
-groundthruth_name = "truth.json"
+groundthruth_name = "truth_easy.json"
 truth_file = args.input + os.sep +'ref' + os.sep + groundthruth_name
 
 with open(truth_file) as f : 
@@ -87,7 +87,7 @@ percentage_correct_rows = percentage_of_correct_rows(dic_truth=dic_truth,dic_pre
 print("percentage of correct rows : ",percentage_correct_rows)
 
 
-output_file = args.output+os.sep +"scores.txt"
+output_file = args.output+os.sep +"scores_easy.txt"
 
 with open(output_file,'w') as f_output : 
     f_output.write("percentage : " + str(percentage_correct_rows))
@@ -95,3 +95,8 @@ with open(output_file,'w') as f_output :
 print("Output :")
 print(os.listdir(args.output))
 print("")
+
+
+
+
+

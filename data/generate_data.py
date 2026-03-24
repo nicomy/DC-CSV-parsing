@@ -7,28 +7,32 @@ import math
 from datetime import datetime
 
 
-eval_nb_persons_easy = 1000
 
-eval_nb_persons_hard = 5000
 
-eval_nb_csv_file_easy =  5
 
-eval_nb_csv_file_hard = 12
-
-##### generate folders 
+##### generate folders and parameters 
 
 path_groundtruth="data_groundtruth/"
-groundtruth_file = path_groundtruth+"truth.json"
-# Starting_ground_truth = path_groundtruth+"starting_truth.json"
+groundtruth_file_easy = path_groundtruth+"truth_easy.json"
+groundtruth_file_hard = path_groundtruth+"truth_hard.json"
+
+
+eval_nb_persons_easy = 1000
+eval_nb_csv_file_easy =  10
+eval_nb_persons_hard = 5000
+eval_nb_csv_file_hard = 15
 
 path_csv = "data_csved/"
-csv_base_name_starting="file_ex"
 csv_base_name_easy = "file_easy"
-csv_base_name_hard ="file_easy"
+csv_base_name_hard ="file_hard"
 
 
+starting_nb_persons = 20
+starting_nb_csv_file =2
+
+csv_base_name_starting="file_exemple"
 path_csv_starting_kit = "starting_csv/"
-starting_groundtruth_file = path_csv_starting_kit+ os.sep + "starting_truth.json"
+groundtruth_file_starting = path_csv_starting_kit+ os.sep + "starting_truth.json"
 
 # path_starting_kit="../starting_kit/"
 # starting_kit_data
@@ -49,7 +53,7 @@ if not os.path.exists(path_csv_starting_kit):
 
 original_date_format='%d/%m/%Y'
 list_date_format_easy= ['%d/%m/%Y','%Y-%m-%d','%m/%d/%Y','%Y:%m:%d:00:00',original_date_format, "%c" ]
-list_date_format_hard = list_date_format + ["%A %d %B %Y", "%d%m%Y" ]
+list_date_format_hard = list_date_format_easy + ["%A %d %B %Y", "%d%m%Y" ]
 
 
 list_seperator_easy = ['\t' , ',' , ';' , '|']
@@ -77,7 +81,7 @@ def generate_groundtruth(nb_persons):
         last_name = fake.last_name()
 
         address = fake.address()
-        date = fake.date(str = original_date_format)
+        date = fake.date(pattern = original_date_format)
         dic_pers[id] = {"first_name":first_name,"last_name":last_name,"address":address,"date":date}
 
     return(dic_pers)
@@ -142,7 +146,6 @@ def change_date_format(str_date_origin,str_format_output,original_date_format=or
 def to_str_csv_format(dic_pers,list_id,delimiter='"', str_date_format=original_date_format,separator=","):
     str_row = ""
 
-
     for id in list_id:
         # chance to change the date format
         # if(random.random()<change_dates_format_chance ):
@@ -154,7 +157,8 @@ def to_str_csv_format(dic_pers,list_id,delimiter='"', str_date_format=original_d
 
         list_row = list(dic_pers[id].values())
         str_row += delimiter + str(id) +delimiter + separator
-        str_row += delimiter + delimiter+separator+delimiter.join(list_row) + delimiter
+        # str_row += '"' + '","'.join(list_row) + '"'
+        str_row += delimiter + (delimiter+separator+delimiter).join(list_row) + delimiter
         str_row += '\n'
     return(str_row)
      
@@ -182,10 +186,10 @@ class Shitify:
 
 #### generate evaluation datas easy 
 
-def fun_generate_datas(path_csv, prefix_name_output, nb_persons,nb_csv_file, shitify_params,list_delim):
+def fun_generate_datas(path_csv, groundtruth_file , prefix_name_output, nb_persons,nb_csv_file, shitify_params):
 
     dic_pers = generate_groundtruth(nb_persons)
-    dic_pers = remove_data(dic_pers,nb_persons/10)
+    dic_pers = remove_data(dic_pers,int(nb_persons/10))
     dic_pers= {int(k):v for k,v in dic_pers.items()}
 
     write_groundtruth_in_json(dic_pers,groundtruth_file)
@@ -193,9 +197,6 @@ def fun_generate_datas(path_csv, prefix_name_output, nb_persons,nb_csv_file, shi
     list_split = random_split(dic_pers,nb_csv_file)
 
 
-    str_date_format= random.sample(shitify_params.l_date_format,1)[0]
-    delimiter  = random.sample(shitify_params.l_delim,1)[0]
-    separator  = random.sample(shitify_params.l_separator,1)[0]
      
 
     for i in range(0,nb_csv_file) : 
@@ -206,8 +207,13 @@ def fun_generate_datas(path_csv, prefix_name_output, nb_persons,nb_csv_file, shi
         # else : 
         #     add_quote = True
         
+        str_date_format= random.sample(shitify_params.l_date_format,1)[0]
+        delimiter  = random.sample(shitify_params.l_delim,1)[0]
+        separator  = random.sample(shitify_params.l_separator,1)[0]
             
         
+        print(f"file_name : {file_name}, date_format : {str_date_format}, delimiter={delimiter},separator={separator}")
+
         str_file = to_str_csv_format(dic_pers,list_split[i],
                                      delimiter=delimiter,
                                      str_date_format=str_date_format,
@@ -217,75 +223,44 @@ def fun_generate_datas(path_csv, prefix_name_output, nb_persons,nb_csv_file, shi
     return ; 
 
 
-Shitify_easy = Shitify(list_date_format_easy,list_seperator_easy)
-Shitify_hard = Shitify(list_date_format_hard,list_seperator_hard)
+print(f"easy list separator={list_seperator_easy}")
+
+Shitify_easy = Shitify(list_date_format_easy,list_seperator_easy,list_delim)
 
 #generate easy _files
 fun_generate_datas(path_csv= path_csv,
-                   prefix_name_output =csv_base_name_easy, 
+                   prefix_name_output =csv_base_name_easy,
+                   groundtruth_file=  groundtruth_file_easy,
                    nb_persons= eval_nb_persons_easy,
                    nb_csv_file= eval_nb_csv_file_easy, 
-                    shitify_params = Shitify_easy, 
+                    shitify_params = Shitify_easy
                     )
 
-# dic_pers = generate_groundtruth(eval_nb_persons_easy)
-# dic_pers = remove_data(dic_pers,200)
-# dic_pers= {int(k):v for k,v in dic_pers.items()}
 
-# write_groundtruth_in_json(dic_pers,groundtruth_file)
+Shitify_hard = Shitify(list_date_format_hard,list_seperator_hard,list_delim)
+#generate_hard files
+fun_generate_datas(path_csv= path_csv,
+                   prefix_name_output =csv_base_name_hard, 
+                   groundtruth_file=  groundtruth_file_hard,
+                   nb_persons= eval_nb_persons_hard,
+                   nb_csv_file= eval_nb_csv_file_hard, 
+                    shitify_params = Shitify_hard
+                    )
 
-# list_split = random_split(dic_pers,eval_nb_csv_file_easy)
-
-
-# for i in range(0,eval_nb_csv_file_easy) : 
-#     file_name = path_csv+csv_base_name+str(i)+".csv"
-#     if(random.random()<0.1 ):
-#         add_quote = False
-#     else : 
-#         add_quote = True
-        
-#     str_date_format= random.sample(list_date_format,1)[0]
-#     str_file = to_str_csv_format(dic_pers,list_split[i],add_quote,str_date_format)
-#     write_csv(file_name,str_file)
 
 
 
 #### generate starting datas:
-starting_nb_persons = 20
-starting_nb_csv_file =2
 
 Shitify_starting = Shitify(list_date_format_easy,[",","\t"],['"',''])
 
 
 fun_generate_datas(path_csv= path_csv_starting_kit,
                    prefix_name_output =csv_base_name_starting, 
+                   groundtruth_file=groundtruth_file_starting,
                    nb_persons= starting_nb_persons,
                    nb_csv_file= starting_nb_csv_file, 
-                    shitify_params = Shitify_starting, 
+                    shitify_params = Shitify_starting
                     )
 
-
-# starting_dic_pers = generate_groundtruth(starting_nb_persons)
-# starting_dic_pers = remove_data(starting_dic_pers,5)
-# starting_dic_pers= {int(k):v for k,v in starting_dic_pers.items()}
-
-# write_groundtruth_in_json(starting_dic_pers,starting_groundtruth_file)
-
-# starting_list_split = random_split(starting_dic_pers,starting_nb_csv_file)
-
-
-# for i in range(0,starting_nb_csv_file) : 
-#     file_name = path_csv_starting_kit+csv_base_name+str(i)+".csv"
-
-#     if(i ==0) : 
-#         add_quote = True
-#         str_date_format = original_date_format
-#     else : 
-#         add_quote = False
-#         str_date_format= random.sample(list_date_format_easy,1)[0]
-
-#     str_file = to_str_csv_format(starting_dic_pers,starting_list_split[i],add_quote,original_date_format)
-#     write_csv(file_name,str_file)
-
-# print(json.dumps(dic_pers, indent=4,  ensure_ascii=False))
 

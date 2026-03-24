@@ -34,7 +34,7 @@ solutions: []
 phases:
 - index: 0
   name: Main Task parsing CSV
-  description: good luck 
+  description: good luck UwU
   # start: '2024-02-20 '
   start: '2024-11-29 '
   # end: '2024-03-20 10:40'
@@ -86,7 +86,7 @@ phases:
 leaderboards:
 - index: 0
   title: Best CSV-breaker 
-  key: score
+  key: score_easy
   hidden: false
   submission_rule: "Force_Best"
   columns:

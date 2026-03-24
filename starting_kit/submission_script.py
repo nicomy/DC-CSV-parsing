@@ -18,7 +18,7 @@ def program(list_rows_one_file):
   ## YOUR CODE BEGINS HERE
   ##
 
-  # required_packages = ["sklearn","pandas",'scipy']
+  # required_packages = ["sklearn","pandas",'scipy',.. add you package ]
   # install_and_import_packages(required_packages)
 
   dic_results = {}
@@ -28,7 +28,7 @@ def program(list_rows_one_file):
     id = list_column[0]
     dic_results[id] = {"first_name": list_column[1],
                        "last_name": list_column[2],
-                       "adress": list_column[3].replace("\\n","\n"),
+                       "address": list_column[3].replace("\\n","\n"),
                        "date": list_column[4].removesuffix("\n")}
 
 
@@ -130,8 +130,18 @@ for dataset_name in datasets_list :
 
     cleaned_name=dataset_name.replace("file", "").removesuffix(".csv")
 
-    pred_prop = program(list_csv_data )
+    # pred_prop = program(list_csv_data )
+    try:
+        pred_prop = program(list_csv_data )
+    except Exception as exc:
 
+        print(f"WARNING : this file {dataset_name} is ignored because of the error : {exc}" )
+        import traceback 
+        print (traceback.format_exc())
+
+        print("However the zip is still being produced.")
+        # print(exc) 
+        pred_prop = {}
     # validate_pred(pred_prop, nb_samples=mix_rna.shape[1], nb_cells=ref_bulkRNA.shape[1], col_names=ref_bulkRNA.columns)
     pred_dic = pred_dic | pred_prop
 

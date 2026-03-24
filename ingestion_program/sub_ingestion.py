@@ -95,9 +95,18 @@ for dataset_name in datasets_list :
 
     print(f"generating prediction for dataset: {dataset_name}")
 
-    cleaned_name=dataset_name.replace("file", "").removesuffix(".csv")
+    # cleaned_name=dataset_name.replace("file", "").removesuffix(".csv")
 
-    pred_prop = program(list_csv_data )
+
+    try:
+        pred_prop = program(list_csv_data )
+    except Exception as exc:
+        # import traceback 
+        # print (traceback.format_exc())
+        print(exc) 
+
+        print(f"this file %s is ignored", dataset_name )
+        pred_prop = {}
 
     # validate_pred(pred_prop, nb_samples=mix_rna.shape[1], nb_cells=ref_bulkRNA.shape[1], col_names=ref_bulkRNA.columns)
     pred_dic = pred_dic | pred_prop
@@ -113,7 +122,7 @@ def write_in_json(dic_res,file):
     with open(file,"w") as f :
         f.write(json_pers)
 
-pred_dic= {int(k):v for k,v in pred_dic.items()}
+pred_dic= {int(k):v for k,v in pred_dic.items() }
 write_in_json(  pred_dic, os.sep.join([output_results,prediction_name]))
 
 
