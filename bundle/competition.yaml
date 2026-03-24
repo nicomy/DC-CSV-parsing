@@ -85,30 +85,65 @@ phases:
 # }
 leaderboards:
 - index: 0
-  title: Scores
+  title: Best CSV-breaker 
   key: score
   hidden: false
-  submission_rule: "Add_And_Delete_Multiple"
+  submission_rule: "Force_Best"
   columns:
   - title: percentage of correct rows
-    key: percentage
+    key: percentage_rows_easy
     index: 0
     sorting: desc
-  # - title: overall performance dataset 1
-  #   key: Accuracy_mean_1
-  #   index: 1
-  #   sorting: desc
-  #   hidden: false  
-  # - title: overall performance dataset 2
-  #   key: Accuracy_mean_2
-  #   index: 2
-  #   sorting: desc
-  #   hidden: false
-  # - title: overall performance dataset 3
-  #   key: Accuracy_mean_3
-  #   index: 3
-  #   sorting: desc
-  #   hidden: false
+  - title: Percentage of correct names
+    key: percentage_names_easy
+    index: 1
+    sorting: desc
+    hidden: false  
+  - title: Percentage of correct dates
+    key: percentage_dates_easy
+    index: 2
+    sorting: desc
+    hidden: false
+  - title: Percentage of correct adress
+    key: percentage_adress_easy
+    index: 3
+    sorting: desc
+    hidden: false
+  - title: Percentage of correct adress
+    key: percentage_adress_easy
+    index: 3
+    sorting: desc
+    hidden: false
+- index: 2
+  title: Best CSV-breaker - hard mode 
+  key: score-hard
+  hidden: true
+  submission_rule: "Force_Best"
+  columns:
+  - title: percentage of correct rows
+    key: percentage_rows_hard
+    index: 0
+    sorting: desc
+  - title: Percentage of correct names
+    key: percentage_names_hard
+    index: 1
+    sorting: desc
+    hidden: false  
+  - title: Percentage of correct dates
+    key: percentage_dates_hard
+    index: 2
+    sorting: desc
+    hidden: false
+  - title: Percentage of correct adress
+    key: percentage_adress_hard
+    index: 3
+    sorting: desc
+    hidden: false
+  - title: Percentage of correct adress
+    key: percentage_adress_hard
+    index: 3
+    sorting: desc
+    hidden: false
   # - title: overall performance dataset 4
   #   key: Accuracy_mean_4
   #   index: 4

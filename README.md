@@ -1,7 +1,7 @@
 # GDC-CSV
 
 
-We want to include 
+
 
 ## Getting started
 
@@ -22,6 +22,18 @@ genereate CSVs and grountruth.json
 ```
 cd data 
 python generate_data.py
+```
+
+test localy 
+```
+bash test_locally.sh
+bash test_docker_locally.sh
+```
+
+
+generate bundel
+```
+bash gen_bundle.sh
 ```
 
 ## Shitify datas

@@ -33,7 +33,7 @@ The `program` function should return a dictionnary with the json format :
      {  
      "first_name": "Stéphanie",
      "last_name": "Lebrun",
-     "adress": "61, boulevard de Peltier\n82421 Paris",
+     "address": "61, boulevard de Peltier\n82421 Paris",
      "date": "2010-08-08"
      }
    ...
