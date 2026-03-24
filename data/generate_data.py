@@ -16,11 +16,18 @@ path_groundtruth="data_groundtruth/"
 groundtruth_file_easy = path_groundtruth+"truth_easy.json"
 groundtruth_file_hard = path_groundtruth+"truth_hard.json"
 
+eval_nb_csv_file_easy =  20
+# eval_nb_persons_easy = 10000
+eval_nb_persons_easy = eval_nb_csv_file_easy * 250
 
-eval_nb_persons_easy = 1000
-eval_nb_csv_file_easy =  10
-eval_nb_persons_hard = 5000
-eval_nb_csv_file_hard = 15
+
+eval_nb_csv_file_hard = 50
+# eval_nb_persons_hard = 50000
+eval_nb_persons_hard = eval_nb_csv_file_easy * 250
+
+
+
+
 
 path_csv = "data_csved/"
 csv_base_name_easy = "file_easy"
@@ -52,16 +59,18 @@ if not os.path.exists(path_csv_starting_kit):
 ########## Shitify parameters
 
 original_date_format='%d/%m/%Y'
-list_date_format_easy= ['%d/%m/%Y','%Y-%m-%d','%m/%d/%Y','%Y:%m:%d:00:00',original_date_format, "%c" ]
-list_date_format_hard = list_date_format_easy + ["%A %d %B %Y", "%d%m%Y" ]
+list_date_format_easy= ['%d/%m/%Y','%Y-%m-%d','%m/%d/%Y','%Y:%m:%d:00:00',original_date_format, "%c" , '%d,%m,%Y']
+list_date_format_hard = list_date_format_easy + ["%A %d %B %Y", "%d%m%Y",'%m/%d/%y' "Week:%V-%d/%m/%Y-time:%H%S" ]
 
 
 list_seperator_easy = ['\t' , ',' , ';' , '|']
-list_seperator_hard = list_seperator_easy + [random.randint(0,10)*" ", random.randint(0,3)*"\t"]
+list_seperator_hard = list_seperator_easy + [random.randint(1,10)*" ", random.randint(2,5)*"\t"]
 
 
 
-list_delim =["",'"','`']
+list_delim_easy =["",'"']
+list_delim_hard =list_delim_easy +['`', '“',]
+
 
 
 ###################################
@@ -197,8 +206,6 @@ def fun_generate_datas(path_csv, groundtruth_file , prefix_name_output, nb_perso
     list_split = random_split(dic_pers,nb_csv_file)
 
 
-     
-
     for i in range(0,nb_csv_file) : 
         file_name = path_csv+prefix_name_output+str(i)+".csv"
 
@@ -225,7 +232,7 @@ def fun_generate_datas(path_csv, groundtruth_file , prefix_name_output, nb_perso
 
 print(f"easy list separator={list_seperator_easy}")
 
-Shitify_easy = Shitify(list_date_format_easy,list_seperator_easy,list_delim)
+Shitify_easy = Shitify(list_date_format_easy,list_seperator_easy,list_delim_easy)
 
 #generate easy _files
 fun_generate_datas(path_csv= path_csv,
@@ -237,7 +244,7 @@ fun_generate_datas(path_csv= path_csv,
                     )
 
 
-Shitify_hard = Shitify(list_date_format_hard,list_seperator_hard,list_delim)
+Shitify_hard = Shitify(list_date_format_hard,list_seperator_hard,list_delim_hard)
 #generate_hard files
 fun_generate_datas(path_csv= path_csv,
                    prefix_name_output =csv_base_name_hard, 
@@ -252,7 +259,7 @@ fun_generate_datas(path_csv= path_csv,
 
 #### generate starting datas:
 
-Shitify_starting = Shitify(list_date_format_easy,[",","\t"],['"',''])
+Shitify_starting = Shitify(list_date_format_easy,[",",";"],['"',''])
 
 
 fun_generate_datas(path_csv= path_csv_starting_kit,

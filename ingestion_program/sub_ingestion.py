@@ -53,11 +53,64 @@ def install_and_import_packages(required_packages):
           subprocess.check_call([sys.executable, "-m", "pip", "install", package_to_install])
           globals()[package] = importlib.import_module(package)
 
-          
+        
+
+def write_in_json(dic_res,file):
+    json_pers = json.dumps(dic_res, indent=2, sort_keys=True,  ensure_ascii=False)
+    with open(file,"w") as f :
+        f.write(json_pers)
+
+
+
+def generate_prop_dic(prefix_file="file_easy", prediction_name="output_easy.json" ):
+    dir_name = input_dir
+    datasets_list = [filename for filename in os.listdir(dir_name) if filename.startswith(prefix_file)]
+    pred_dic = {}
+    for dataset_name in datasets_list :
+
+        file= os.path.join(dir_name,dataset_name)
+        
+        with open(file,'r') as f : 
+            list_csv_data = f.readlines()
+        
+        print(f"generating prediction for dataset: {dataset_name}")
+
+        # cleaned_name=dataset_name.replace("file", "").removesuffix(".csv")
+
+        try:
+            pred_prop = program(list_csv_data )
+        except Exception as exc:
+            print(f"WARNING : this file {dataset_name} is ignored because of the error : {exc}\n" )
+            # import traceback 
+            # print (traceback.format_exc())
+            # print("However the zip is still being produced.")
+            pred_prop= {}
+        
+        # if(! all(isinstance(key, int) for key in pred_prop.keys())):
+        try : 
+            for key in pred_prop.keys(): 
+                int(key)
+        except Exception as exc:
+            print(f"WARNING : this file {dataset_name} is ignored because the id could not be converted into an integer \n" )
+            pred_prop= {}
+            # import traceback 
+            # print (traceback.format_exc())
+            # print("However the zip is still being produced.")
+
+        pred_dic = pred_dic | pred_prop
+
+
+
+    pred_dic= {int(k):v for k,v in pred_dic.items() }
+    write_in_json(  pred_dic, os.sep.join([output_results,prediction_name]))
+
+    return ; 
+
+
+
 
 # Reading and executing the code submitted by the participants
 program_file = os.path.join(submission_program, 'program.py')
-
 # Ensure that the file exists before attempting to read it
 if os.path.isfile(program_file):
     with open(program_file, 'r') as file:
@@ -73,57 +126,20 @@ else:
     print("The 'program' function is not defined in the submitted code.")
 
 
+generate_prop_dic(prefix_file="file_easy",
+                  prediction_name="output_easy.json")
 
-
+generate_prop_dic(prefix_file="file_hard",
+                  prediction_name="output_hard.json")
 
 
 #### Read Datas and execute program
 
-dir_name = input_dir
-datasets_list = [filename for filename in os.listdir(dir_name) if filename.startswith("file")]
-
-
-pred_dic = {}
-for dataset_name in datasets_list :
-
-    file= os.path.join(dir_name,dataset_name)
-    
-    with open(file,'r') as f : 
-        list_csv_data = f.readlines()
-    
-
-
-    print(f"generating prediction for dataset: {dataset_name}")
-
-    # cleaned_name=dataset_name.replace("file", "").removesuffix(".csv")
-
-
-    try:
-        pred_prop = program(list_csv_data )
-    except Exception as exc:
-        # import traceback 
-        # print (traceback.format_exc())
-        print(exc) 
-
-        print(f"this file %s is ignored", dataset_name )
-        pred_prop = {}
-
-    # validate_pred(pred_prop, nb_samples=mix_rna.shape[1], nb_cells=ref_bulkRNA.shape[1], col_names=ref_bulkRNA.columns)
-    pred_dic = pred_dic | pred_prop
 
 
 
 
-prediction_name = "output.json"
 
-
-def write_in_json(dic_res,file):
-    json_pers = json.dumps(dic_res, indent=2, sort_keys=True,  ensure_ascii=False)
-    with open(file,"w") as f :
-        f.write(json_pers)
-
-pred_dic= {int(k):v for k,v in pred_dic.items() }
-write_in_json(  pred_dic, os.sep.join([output_results,prediction_name]))
 
 
 

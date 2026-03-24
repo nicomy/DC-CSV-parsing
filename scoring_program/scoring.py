@@ -17,9 +17,6 @@ parser.add_argument("program", help="Directory where the ingestion program is lo
 args = parser.parse_args()
 
 
-
-
-
 # input = "test_output"
 # output = "test_output"
 # program ="test_output"
@@ -55,46 +52,77 @@ def percentage_of_correct_rows(dic_truth, dic_pred):
 
 
 
-
-
-
-
-
 ###########################################################
-# Reading files and scroring function
+# Reading files and scoring function
 ###########################################################
 
 
+def score(dataset_lvl_name = "easy" ):
+    
+    groundthruth_name= "truth_"+dataset_lvl_name+".json"
+    truth_file = args.input + os.sep +'ref' + os.sep + groundthruth_name
+
+    with open(truth_file) as f : 
+        dic_truth = json.load(f)
+
+    participant_file_name= "output_"+dataset_lvl_name+".json"
+    prediction_file = args.input+os.sep+ "res" +os.sep+ participant_file_name
+
+    with open(prediction_file) as fp : 
+        dic_prediction = json.load(fp)
 
 
-groundthruth_name = "truth_easy.json"
-truth_file = args.input + os.sep +'ref' + os.sep + groundthruth_name
+    # percentage 
+    percentage_correct_rows = percentage_of_correct_rows(dic_truth=dic_truth,dic_pred=dic_prediction)
 
-with open(truth_file) as f : 
-    dic_truth = json.load(f)
-
-participant_file_name = "output.json"
-prediction_file = args.input+os.sep+ "res" +os.sep+ participant_file_name
-
-with open(prediction_file) as fp : 
-    dic_prediction = json.load(fp)
+    print("percentage of correct rows : ",percentage_correct_rows)
 
 
-# percentage 
+    output_name ="scores_"+dataset_lvl_name+".txt"
+    output_file = args.output+os.sep + output_name
 
-percentage_correct_rows = percentage_of_correct_rows(dic_truth=dic_truth,dic_pred=dic_prediction)
+    with open(output_file,'w') as f_output : 
+        f_output.write("percentage_rows_"+dataset_lvl_name+" : " + str(percentage_correct_rows))
 
-print("percentage of correct rows : ",percentage_correct_rows)
+    print("Output :")
+    print(os.listdir(args.output))
+    print("")
 
 
-output_file = args.output+os.sep +"scores_easy.txt"
 
-with open(output_file,'w') as f_output : 
-    f_output.write("percentage : " + str(percentage_correct_rows))
+score(dataset_lvl_name = "easy")
 
-print("Output :")
-print(os.listdir(args.output))
-print("")
+score(dataset_lvl_name = "hard")
+
+
+
+# groundthruth_name = "truth_easy.json"
+# truth_file = args.input + os.sep +'ref' + os.sep + groundthruth_name
+
+# with open(truth_file) as f : 
+#     dic_truth = json.load(f)
+
+# participant_file_name = "output_easy.json"
+# prediction_file = args.input+os.sep+ "res" +os.sep+ participant_file_name
+
+# with open(prediction_file) as fp : 
+#     dic_prediction = json.load(fp)
+
+
+# # percentage 
+# percentage_correct_rows = percentage_of_correct_rows(dic_truth=dic_truth,dic_pred=dic_prediction)
+
+# print("percentage of correct rows : ",percentage_correct_rows)
+
+
+# output_file = args.output+os.sep +"scores_easy.txt"
+
+# with open(output_file,'w') as f_output : 
+#     f_output.write("percentage : " + str(percentage_correct_rows))
+
+# print("Output :")
+# print(os.listdir(args.output))
+# print("")
 
 
 

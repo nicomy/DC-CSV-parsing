@@ -1,7 +1,7 @@
 
 
 
-# bash prepare_to_score_locally.sh
+bash prepare_to_score_locally.sh
 
 
 

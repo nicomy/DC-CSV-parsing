@@ -139,9 +139,22 @@ for dataset_name in datasets_list :
         import traceback 
         print (traceback.format_exc())
 
-        print("However the zip is still being produced.")
+        print("However the zip is still being produced with the other readable file.")
+
         # print(exc) 
         pred_prop = {}
+
+    try : 
+        for key in pred_prop.keys(): 
+            int(key)
+    except Exception as exc:
+        print(f"WARNING : this file {dataset_name} is ignored because the id could not be converted into an integer \n" )
+        print("the error : {exc}")
+        import traceback 
+        print (traceback.format_exc())
+        print("However the zip is still being produced with the other readable file.")
+
+        pred_prop= {}
     # validate_pred(pred_prop, nb_samples=mix_rna.shape[1], nb_cells=ref_bulkRNA.shape[1], col_names=ref_bulkRNA.columns)
     pred_dic = pred_dic | pred_prop
 
