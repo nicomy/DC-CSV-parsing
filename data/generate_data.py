@@ -18,12 +18,12 @@ path_groundtruth="data_groundtruth/"
 groundtruth_file_easy = path_groundtruth+"truth_easy.json"
 groundtruth_file_hard = path_groundtruth+"truth_hard.json"
 
-eval_nb_csv_file_easy =  20
+eval_nb_csv_file_easy =  25
 # eval_nb_persons_easy = 10000
 eval_nb_persons_easy = eval_nb_csv_file_easy * 250
 
 
-eval_nb_csv_file_hard = 50
+eval_nb_csv_file_hard = 100
 # eval_nb_persons_hard = 50000
 eval_nb_persons_hard = eval_nb_csv_file_easy * 250
 
@@ -41,7 +41,7 @@ starting_nb_csv_file =2
 
 csv_base_name_starting="file_exemple"
 path_csv_starting_kit = "starting_csv/"
-groundtruth_file_starting = path_csv_starting_kit+ os.sep + "starting_truth.json"
+groundtruth_file_starting = path_csv_starting_kit+ os.sep + "truth_starting.json"
 
 # path_starting_kit="../starting_kit/"
 # starting_kit_data

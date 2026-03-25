@@ -33,12 +33,6 @@ print("")
 
 ###  EVALUATION function
 
-def get_dic2sub_key(dic , sub_key):
-    res_dic = {}
-    for id,l_v in dic.items():
-        res_dic[id] = dic[id][sub_key]
-    return res_dic
-
 
 def percentage_of_correct_rows(dic_truth, dic_pred):
     # print("evaluatig results")
@@ -58,16 +52,6 @@ def percentage_correct(dic_truth, dic_pred,sub_key=None):
     nb_total_rows = len(dic_truth)
     if sub_key =="names" : 
         nb_total_rows *=2
-    # dic_truth_last_name = get_dic2sub_key(dic_truth,"last_name")
-    # nb_last_names = len([x for x in dic_truth_last_name.values() if  x!="" ])
-
-    # dic_truth_first_name = get_dic2sub_key(dic_truth,"first_name")
-    # nb_first_names = len([x for x in dic_truth_first_name.values() if  x!="" ])
-
-
-    # dic_pred_last_name = get_dic2sub_key(dic_pred,"last_name")
-    # dic_pred_first_name = get_dic2sub_key(dic_pred,"first_name")
-
 
     nb_correct_sub_keys= 0 
     for id,dic_truth_values in dic_truth.items():
@@ -135,17 +119,6 @@ def score(dataset_lvl_name = "easy" , profiling_file = "profiling.json"):
 
     print(f"Time to parse all files : {time}")
     print(f"Percentage of files missed : {percentage_files_missed}")
-
-
-
-    # with open(output_file,'w') as f_output : 
-    #     f_output.write("percentage_rows_"+dataset_lvl_name+" : " + str(percentage_correct_rows))
-    #     f_output.write("percentage_names_"+dataset_lvl_name+" : " + str(percentage_correct_names))
-    #     f_output.write("percentage_dates_"+dataset_lvl_name+" : " + str(percentage_dates))
-    #     f_output.write("percentage_address_"+dataset_lvl_name+" : " + str(percentage_address))
-    #     f_output.write("percentage_files_missed_"+dataset_lvl_name+" : " + str(percentage_files_missed))
-    #     f_output.write("time_"+dataset_lvl_name+" : " + str(time))
-    
 
     dic_res = {
         "percentage_rows_"+dataset_lvl_name : percentage_correct_rows      , 

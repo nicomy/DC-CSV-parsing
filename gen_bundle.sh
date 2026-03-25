@@ -10,7 +10,8 @@ popd
 rm -rf starting_kit/data
 mkdir -p starting_kit/data
 pushd starting_kit/data
-ln -s ../../data/starting_csv/*.csv .
+ln -s ../../data/starting_csv/* .
+# ln -s ../../data/starting_csv/*.csv .
 popd
 
 

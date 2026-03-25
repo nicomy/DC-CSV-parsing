@@ -27,7 +27,7 @@ def program(list_rows_one_file):
     list_column  = line.split(',')
     list_column = [x.replace('"','') for x in list_column]
     id = list_column[0]
-    
+
     if(id =="id"):
         continue
 
@@ -125,6 +125,7 @@ datasets_list = [filename for filename in os.listdir(dir_name) if filename.start
 
 pred_dic = {}
 total_time = 0
+nb_files_missed = 0
 for dataset_name in datasets_list :
 
     file= os.path.join(dir_name,dataset_name)
@@ -149,17 +150,7 @@ for dataset_name in datasets_list :
 
         print("However the zip is still being produced with the other readable file.")
         pred_prop = {}
-
-    # try : 
-    #     for key in pred_prop.keys(): 
-    #         int(key)
-    # except Exception as exc:
-    #     print(f"WARNING : this file {dataset_name} is ignored because the id could not be converted into an integer \n" )
-    #     print("the error : {exc}")
-    #     import traceback 
-    #     print (traceback.format_exc())
-    #     print("However the zip is still being produced with the other readable file.")
-    #     pred_prop= {}
+        nb_files_missed +=1
 
 
     start = timer()
@@ -168,7 +159,7 @@ for dataset_name in datasets_list :
     total_time += end-start
 
 print(f"Total time needed to parse all exemple files : {total_time}")
-
+percentage_files_missed = nb_files_missed/len(datasets_list)
 
 ############################### 
 print("\n")
@@ -230,10 +221,72 @@ write_in_json(  pred_dic, os.path.join("submissions", prediction_name))
 
 
 
-# Create the associated zip file:
-# zip_results = os.path.join("submissions", f"results_{date_suffix}.zip")
-# with zipfile.ZipFile(zip_results, 'w') as zipf:
-#     zipf.write(os.path.join("submissions", prediction_name), arcname=prediction_name)
+###### Evaluation function
+############################
+###  EVALUATION function
+############################
 
-# print(zip_results) 
+def percentage_of_correct_rows(dic_truth, dic_pred):
+    # print("evaluatig results")
+    nb_total_rows = len(dic_truth)
+    nb_correct_rows = 0 
+    for id,dic_truth_values in dic_truth.items():
+        # print(dic_truth_values)
+        if id not in dic_pred : 
+            continue
+        dic_pred_values = dic_pred[id]
+        if dic_truth_values == dic_pred_values :
+            nb_correct_rows +=1
+    # print(nb_correct_rows)
+    return (nb_correct_rows/nb_total_rows)
 
+def percentage_correct(dic_truth, dic_pred,sub_key=None):
+    nb_total_rows = len(dic_truth)
+    if sub_key =="names" : 
+        nb_total_rows *=2
+
+    nb_correct_sub_keys= 0 
+    for id,dic_truth_values in dic_truth.items():
+        if id not in dic_pred : 
+            continue
+        dic_pred_values = dic_pred[id]
+        
+        if sub_key ==None : 
+            if dic_truth_values == dic_pred_values :
+                nb_correct_sub_keys +=1
+        elif sub_key =="names" : 
+            for name in ["last_name","first_name"] :
+                if dic_truth_values[name] == dic_pred_values[name] :
+                    nb_correct_sub_keys +=1
+        else : 
+            if dic_truth_values[sub_key] == dic_pred_values[sub_key] :
+                    nb_correct_sub_keys +=1
+
+    return (nb_correct_sub_keys/nb_total_rows)
+
+
+###########################################################
+# Reading files and scoring function
+###########################################################
+
+dataset_lvl_name= 'starting'
+print(f"\n\nScoring {dataset_lvl_name} dataset")
+
+groundthruth_name= "truth_"+dataset_lvl_name+".json"
+truth_file = "data" + os.sep  + groundthruth_name
+
+with open(truth_file) as f : 
+    dic_truth = json.load(f)
+
+percentage_correct_rows = percentage_correct(dic_truth=dic_truth,dic_pred=pred_dic,sub_key=None)
+print("percentage of correct rows : ",percentage_correct_rows)
+percentage_correct_names = percentage_correct(dic_truth=dic_truth,dic_pred=pred_dic,sub_key="names")
+print("percentage of correct names : ",percentage_correct_names)
+percentage_dates = percentage_correct(dic_truth=dic_truth,dic_pred=pred_dic,sub_key="date")
+print("percentage of correct dates : ",percentage_dates)
+percentage_address = percentage_correct(dic_truth=dic_truth,dic_pred=pred_dic,sub_key="address")
+print("percentage of correct address : ",percentage_address)
+
+print(f"Percentage of files missed : {percentage_files_missed}")
+
+    

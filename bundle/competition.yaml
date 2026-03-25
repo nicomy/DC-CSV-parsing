@@ -1,7 +1,7 @@
 version: '2'
 title: Gricad parsing CSV Challenge
 docker_image: python
-# queue:  a05e3a5f-09df-40e3-978e-02f147289877 
+queue:  a05e3a5f-09df-40e3-978e-02f147289877 
 description: Gricad parsing CSV Challenge
 registration_auto_approve: true
 enable_detailed_results: false
@@ -116,7 +116,7 @@ leaderboards:
   - title: ignored files
     key: percentage_files_missed_easy
     index: 4
-    precision: 3
+    precision: 2
     sorting: asc
     hidden: false
   - title: Total time.
@@ -127,30 +127,36 @@ leaderboards:
     hidden: false
   - title: correct rows-hard
     key: percentage_rows_hard
+    precision: 3
     index: 6
     sorting: desc
   - title: correct names-hard
     key: percentage_names_hard
+    precision: 3
     index: 7
     sorting: desc
     hidden: true  
   - title: correct dates-hard
     key: percentage_dates_hard
+    precision: 3
     index: 8
     sorting: desc
     hidden: true
   - title: correct address-hard
     key: percentage_address_hard
+    precision: 3
     index: 9
     sorting: desc
     hidden: true
   - title: ignored files-hard
     key: percentage_files_missed_hard
+    precision: 2
     index: 10
     sorting: asc
     hidden: true
   - title: Total time -hard.
     key: time_hard
+    precision: 5
     index: 11
     sorting: asc
     hidden: true

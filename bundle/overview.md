@@ -6,12 +6,12 @@ You have to retrieve fictive person name, adress and date of born from different
 
 ## Goal of the Data challenge
 
-You have to create a function that parse a CSV file.  A baseline of this function already exist **Look at the tab** `how to get started` to start smoothly ~UwU~.  
+You have to create a function that parse a CSV file.  A baseline of this function already exist **Look at the tab** `how to get started` to start smoothly UwU.  
 EAch csv files are passed as a list of rows in the function argument : `list_rows_one_file`.
 
 Csv files will look like this : 
 
-The 
+Whitin a csv file, delimiters, date formats should be the same. 
 
 -  File0.csv : 
 ```
@@ -29,7 +29,7 @@ The
 ```
 19;Nath;Carpentier;47, rue de Carpentier\n74108 Bernier-la-Forêt;07-03-1975
 2;Alexandre;Guilbert;83, chemin de Allard\n64142 Gillet-les-Bains;10-05-1983
-0;Philippe;Lemoine;30, avenue de Mercier\n47411 Paris-les-Bains;20-07-1981
+20;Philippe;Lemoine;30, avenue de Mercier\n47411 Paris-les-Bains;20-07-1981
 3;Élise;Delannoy;724, rue Potier\n14392 Sainte Brigitte;08-09-1979
 ```
 
