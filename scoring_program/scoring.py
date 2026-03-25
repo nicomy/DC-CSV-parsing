@@ -125,40 +125,65 @@ def score(dataset_lvl_name = "easy" , profiling_file = "profiling.json"):
     print("percentage of correct rows : ",percentage_correct_rows)
 
     percentage_correct_names = percentage_correct(dic_truth=dic_truth,dic_pred=dic_prediction,sub_key="names")
-    print("percentage of correct rows : ",percentage_correct_names)
+    print("percentage of correct names : ",percentage_correct_names)
 
     percentage_dates = percentage_correct(dic_truth=dic_truth,dic_pred=dic_prediction,sub_key="date")
-    print("percentage of correct rows : ",percentage_dates)
+    print("percentage of correct dates : ",percentage_dates)
 
     percentage_address = percentage_correct(dic_truth=dic_truth,dic_pred=dic_prediction,sub_key="address")
-    print("percentage of correct rows : ",percentage_address)
+    print("percentage of correct address : ",percentage_address)
 
     print(f"Time to parse all files : {time}")
     print(f"Percentage of files missed : {percentage_files_missed}")
 
-    output_name ="scores_"+dataset_lvl_name+".txt"
-    output_file = args.output+os.sep + output_name
 
-    with open(output_file,'w') as f_output : 
-        f_output.write("percentage_rows_"+dataset_lvl_name+" : " + str(percentage_correct_rows))
-        f_output.write("percentage_names_"+dataset_lvl_name+" : " + str(percentage_correct_names))
-        f_output.write("percentage_dates_"+dataset_lvl_name+" : " + str(percentage_dates))
-        f_output.write("percentage_address_"+dataset_lvl_name+" : " + str(percentage_address))
-        f_output.write("percentage_files_missed_"+dataset_lvl_name+" : " + str(percentage_files_missed))
-        f_output.write("time_"+dataset_lvl_name+" : " + str(time))
+
+    # with open(output_file,'w') as f_output : 
+    #     f_output.write("percentage_rows_"+dataset_lvl_name+" : " + str(percentage_correct_rows))
+    #     f_output.write("percentage_names_"+dataset_lvl_name+" : " + str(percentage_correct_names))
+    #     f_output.write("percentage_dates_"+dataset_lvl_name+" : " + str(percentage_dates))
+    #     f_output.write("percentage_address_"+dataset_lvl_name+" : " + str(percentage_address))
+    #     f_output.write("percentage_files_missed_"+dataset_lvl_name+" : " + str(percentage_files_missed))
+    #     f_output.write("time_"+dataset_lvl_name+" : " + str(time))
+    
+
+    dic_res = {
+        "percentage_rows_"+dataset_lvl_name : percentage_correct_rows      , 
+        "percentage_names_"+dataset_lvl_name : percentage_correct_names       , 
+        "percentage_dates_"+dataset_lvl_name : percentage_dates       , 
+        "percentage_address_"+dataset_lvl_name : percentage_address       ,
+        "percentage_files_missed_"+dataset_lvl_name : percentage_files_missed       ,
+        "time_"+dataset_lvl_name : time       
+    }
+    
+    return dic_res
         
-        
-
-    print("Output :")
-    print(os.listdir(args.output))
-    print("")
 
 
 
-score(dataset_lvl_name = "easy")
-score(dataset_lvl_name = "hard")
 
 
+dic_res_easy = score(dataset_lvl_name = "easy")
+dic_res_hard = score(dataset_lvl_name = "hard")
+
+print("Output :")
+print(os.listdir(args.output))
+print("")
+
+
+
+def write_in_json(dic_res,file):
+    json_pers = json.dumps(dic_res, indent=2, sort_keys=True,  ensure_ascii=False)
+    with open(file,"w") as f :
+        f.write(json_pers)
+
+
+# output_name ="scores_"+dataset_lvl_name+".txt"
+output_name ="scores.json"
+
+output_file = args.output+os.sep + output_name
+
+write_in_json(  dic_res_easy| dic_res_hard, output_file)
 
 
 # groundthruth_name = "truth_easy.json"

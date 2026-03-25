@@ -220,17 +220,15 @@ def write_in_json(dic_res,file):
 
 
 # convert keys to int to sort them
-pred_dic= {int(k):v for k,v in pred_dic.items()}
+# pred_dic= {int(k):v for k,v in pred_dic.items()}
 write_in_json(  pred_dic, os.path.join("submissions", prediction_name))
-
-# (,predi_dic)
 
 
 
 # Create the associated zip file:
-zip_results = os.path.join("submissions", f"results_{date_suffix}.zip")
-with zipfile.ZipFile(zip_results, 'w') as zipf:
-    zipf.write(os.path.join("submissions", prediction_name), arcname=prediction_name)
+# zip_results = os.path.join("submissions", f"results_{date_suffix}.zip")
+# with zipfile.ZipFile(zip_results, 'w') as zipf:
+#     zipf.write(os.path.join("submissions", prediction_name), arcname=prediction_name)
 
-print(zip_results) 
+# print(zip_results) 
 

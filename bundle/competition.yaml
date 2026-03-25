@@ -84,76 +84,76 @@ phases:
 #     }
 # }
 leaderboards:
-- index: 0
-  title: Best CSV-breaker 
-  key: score_easy
-  hidden: false
+# - index: 0
+- title: Best CSV-breaker 
+  key: score
+  # hidden: false
   submission_rule: "Force_Best"
   columns:
-  - title: percentage of correct rows
+  - title: correct rows
     key: percentage_rows_easy
     index: 0
+    precision: 3
     sorting: desc
-  - title: Percentage of correct names
+  - title: correct names
     key: percentage_names_easy
     index: 1
+    precision: 3
     sorting: desc
     hidden: false  
-  - title: Percentage of correct dates
+  - title: correct dates
     key: percentage_dates_easy
     index: 2
+    precision: 3
     sorting: desc
     hidden: false
-  - title: Percentage of correct address
+  - title: correct address
     key: percentage_address_easy
     index: 3
+    precision: 3
     sorting: desc
     hidden: false
-  - title: Percentage of ignored files
+  - title: ignored files
     key: percentage_files_missed_easy
     index: 4
+    precision: 3
     sorting: asc
     hidden: false
-  - title: Total time to parse the csv files.
+  - title: Total time.
     key: time_easy
     index: 5
+    precision: 5
     sorting: asc
     hidden: false
-- index: 2
-  title: Best CSV-breaker - hard mode 
-  key: score_hard
-  hidden: true
-  submission_rule: "Force_Best"
-  columns:
-  - title: percentage of correct rows
+  - title: correct rows-hard
     key: percentage_rows_hard
-    index: 0
+    index: 6
     sorting: desc
-  - title: Percentage of correct names
+  - title: correct names-hard
     key: percentage_names_hard
-    index: 1
+    index: 7
     sorting: desc
-    hidden: false  
-  - title: Percentage of correct dates
+    hidden: true  
+  - title: correct dates-hard
     key: percentage_dates_hard
-    index: 2
+    index: 8
     sorting: desc
-    hidden: false
-  - title: Percentage of correct address
+    hidden: true
+  - title: correct address-hard
     key: percentage_address_hard
-    index: 3
+    index: 9
     sorting: desc
-    hidden: false
-  - title: Percentage of ignored files
+    hidden: true
+  - title: ignored files-hard
     key: percentage_files_missed_hard
-    index: 4
+    index: 10
     sorting: asc
-    hidden: false
-  - title: Total time to parse the *hard* csv files.
+    hidden: true
+  - title: Total time -hard.
     key: time_hard
-    index: 5
+    index: 11
     sorting: asc
-    hidden: false
+    hidden: true
   # - title: overall performance dataset 4
   #   key: Accuracy_mean_4
   #   index: 4

@@ -41,7 +41,7 @@ echo "Scoring program done"
 
 
 echo "Test if the output file scores.txt exist"
-filename='test_output/scores.txt'
+filename='test_output/scores.json'
 if [ -f $filename ]; then
     echo 'SUCESS! The result file exists.'
 else
