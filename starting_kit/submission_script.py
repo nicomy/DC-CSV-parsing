@@ -107,9 +107,11 @@ required_packages = [
   "pandas",
   "zipfile",
   "inspect",
+  "timeit"
 ]
 install_and_import_packages(required_packages)
 
+from timeit import default_timer as timer
 
 dir_name = "data"+os.sep
 
@@ -117,6 +119,7 @@ datasets_list = [filename for filename in os.listdir(dir_name) if filename.start
 
 
 pred_dic = {}
+total_time = 0
 for dataset_name in datasets_list :
 
     file= os.path.join(dir_name,dataset_name)
@@ -126,7 +129,7 @@ for dataset_name in datasets_list :
     
 
 
-    print(f"generating prediction for dataset: {dataset_name}")
+    print(f"\nParsing dataset: {dataset_name}")
 
     cleaned_name=dataset_name.replace("file", "").removesuffix(".csv")
 
@@ -140,25 +143,30 @@ for dataset_name in datasets_list :
         print (traceback.format_exc())
 
         print("However the zip is still being produced with the other readable file.")
-
-        # print(exc) 
         pred_prop = {}
 
-    try : 
-        for key in pred_prop.keys(): 
-            int(key)
-    except Exception as exc:
-        print(f"WARNING : this file {dataset_name} is ignored because the id could not be converted into an integer \n" )
-        print("the error : {exc}")
-        import traceback 
-        print (traceback.format_exc())
-        print("However the zip is still being produced with the other readable file.")
+    # try : 
+    #     for key in pred_prop.keys(): 
+    #         int(key)
+    # except Exception as exc:
+    #     print(f"WARNING : this file {dataset_name} is ignored because the id could not be converted into an integer \n" )
+    #     print("the error : {exc}")
+    #     import traceback 
+    #     print (traceback.format_exc())
+    #     print("However the zip is still being produced with the other readable file.")
+    #     pred_prop= {}
 
-        pred_prop= {}
-    # validate_pred(pred_prop, nb_samples=mix_rna.shape[1], nb_cells=ref_bulkRNA.shape[1], col_names=ref_bulkRNA.columns)
+
+    start = timer()
     pred_dic = pred_dic | pred_prop
+    end = timer()
+    total_time += end-start
+
+print(f"Total time needed to parse all exemple files : {total_time}")
+
 
 ############################### 
+print("\n")
 ### Code submission mode
 
 # we generate a zip file with the 'program' source code

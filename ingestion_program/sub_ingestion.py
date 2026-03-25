@@ -4,6 +4,7 @@ import json
 import importlib
 import subprocess
 import sys
+from timeit import default_timer as timer
 
 
 # try:
@@ -42,7 +43,7 @@ output_profiling = args.output_profiling.strip()
 print(f"output_profiling file: {output_profiling}")
 
 
-nb_file_ignored = 0 
+
 
 # Install and import each package
 def install_and_import_packages(required_packages):
@@ -65,9 +66,11 @@ def write_in_json(dic_res,file):
 
 
 def generate_prop_dic(prefix_file="file_easy", prediction_name="output_easy.json" ):
+    nb_file_ignored = 0 
     dir_name = input_dir
     datasets_list = [filename for filename in os.listdir(dir_name) if filename.startswith(prefix_file)]
     pred_dic = {}
+    total_time = 0
     for dataset_name in datasets_list :
 
         file= os.path.join(dir_name,dataset_name)
@@ -75,9 +78,9 @@ def generate_prop_dic(prefix_file="file_easy", prediction_name="output_easy.json
         with open(file,'r') as f : 
             list_csv_data = f.readlines()
         
-        print(f"generating prediction for dataset: {dataset_name}")
 
-        # cleaned_name=dataset_name.replace("file", "").removesuffix(".csv")
+        print(f"\nParsing dataset: {dataset_name}")
+
 
         try:
             pred_prop = program(list_csv_data )
@@ -88,24 +91,28 @@ def generate_prop_dic(prefix_file="file_easy", prediction_name="output_easy.json
             pred_prop= {}
             nb_file_ignored +=1
         
-        try : 
-            for key in pred_prop.keys(): 
-                int(key)
-        except Exception as exc:
-            print(f"WARNING : this file {dataset_name} is ignored because the id could not be converted into an integer \n" )
-            pred_prop= {}
-            import traceback 
-            print (traceback.format_exc())
-            nb_file_ignored +=1
+        # try : 
+        #     for key in pred_prop.keys(): 
+        #         int(key)
+        # except Exception as exc:
+        #     print(f"WARNING : this file {dataset_name} is ignored because the id could not be converted into an integer \n" )
+        #     pred_prop= {}
+        #     import traceback 
+        #     print (traceback.format_exc())
+        #     nb_file_ignored +=1
 
+        start = timer()
         pred_dic = pred_dic | pred_prop
+        end = timer()
+        total_time += end-start
 
 
 
-    pred_dic= {int(k):v for k,v in pred_dic.items() }
+
+    # pred_dic= {int(k):v for k,v in pred_dic.items() }
     write_in_json(  pred_dic, os.sep.join([output_results,prediction_name]))
 
-    return ; 
+    return total_time, nb_file_ignored/len(datasets_list) ; 
 
 
 
@@ -127,17 +134,22 @@ else:
     print("The 'program' function is not defined in the submitted code.")
 
 
-generate_prop_dic(prefix_file="file_easy",
+time_easy,perc_files_missed_easy = generate_prop_dic(prefix_file="file_easy",
                   prediction_name="output_easy.json")
 
-generate_prop_dic(prefix_file="file_hard",
+time_hard,perc_files_missed_hard = generate_prop_dic(prefix_file="file_hard",
                   prediction_name="output_hard.json")
 
 
-#### Read Datas and execute program
+#### wirte profinling infos
 
 
-
+write_in_json(dic_res={"time_easy":time_easy, 
+                       "perc_files_missed_easy": perc_files_missed_easy,
+                       "time_hard":time_hard,
+                       "perc_files_missed_hard":perc_files_missed_hard},
+              file=os.sep.join([output_results,"profiling.json"])
+              )
 
 
 
