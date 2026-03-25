@@ -23,9 +23,14 @@ def program(list_rows_one_file):
 
   dic_results = {}
   for line in list_rows_one_file : 
+    
     list_column  = line.split(',')
     list_column = [x.replace('"','') for x in list_column]
     id = list_column[0]
+    
+    if(id =="id"):
+        continue
+
     dic_results[id] = {"first_name": list_column[1],
                        "last_name": list_column[2],
                        "address": list_column[3].replace("\\n","\n"),

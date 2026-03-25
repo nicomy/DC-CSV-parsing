@@ -112,8 +112,7 @@ def write_groundtruth_in_json(dic_pers,groundtruth_file):
     with open(groundtruth_file,"w") as f :
         f.write(json_pers)
 
-
-
+Headers = ["id","first_name","last_name","address", "date" ]
 
 ###################################
 ## Generate and shitify csv  ##
@@ -151,24 +150,61 @@ def change_date_format(str_date_origin,str_format_output,original_date_format=or
 
 
 
+# def remove_end_line(str_csv):
+#     if random.radnom() < 0.3  # remove all \n character
+#         res_csv= str_csv.replace("\n", ' ')
+#     else :
+#         res_csv = ""
+#         for line in str_csv.split('\n'):
+#             if random.radnom() < 0.4 : 
+#                 res_csv += line.replace("\n", ' ')
+#             else : 
+#                 res_csv += line
+#     return res_csv
+
+
+# def encode(str_csv):
+#     var = 
+#     # binaire, base64, UTF-8, UTF-16, Latin-1, ASCII, UNICODE
+#     str_csv.encode(random.sample(var,1)[0])
+#     return str_csv
+
+
+## parameter to 
+def shitify_row(list_row,shitify_params):
+    if (shitify_params.Shuffle_cells_params["activate"] and random.random()  < shitify_params.Shuffle_cells_params["probability"]):
+        random.shuffle(list_row)
+    
+    # if (shitify_params.add_columns['activate'] and random.random()  < shitify_params.add_columns["probability"] ):
+
+
+    return list_row
+
+
+
+
 #### format to str and csv format. 
-def to_str_csv_format(dic_pers,list_id,delimiter='"', str_date_format=original_date_format,separator=","):
+def to_str_csv_format(dic_pers,list_id,delimiter='"', 
+                      str_date_format=original_date_format,
+                      separator=",",
+                      shitify_params =None):
     str_row = ""
 
     for id in list_id:
-        # chance to change the date format
-        # if(random.random()<change_dates_format_chance ):
-        #     dic_pers[id]["date"] = change_date_format(dic_pers[id]["date"])
-        
+
         
         dic_pers[id]["date"] = change_date_format(dic_pers[id]["date"],str_date_format)
         dic_pers[id]['address'] = dic_pers[id]['address'].replace('\n','\\n')
 
         list_row = list(dic_pers[id].values())
+
+
         str_row += delimiter + str(id) +delimiter + separator
         # str_row += '"' + '","'.join(list_row) + '"'
         str_row += delimiter + (delimiter+separator+delimiter).join(list_row) + delimiter
-        str_row += '\n'
+
+        if(not(shitify_params and shitify_params.dic_delete_end_char["activate"] and random.radnom() < shitify_params.dic_delete_end_char["probability"])) : 
+            str_row += '\n'
     return(str_row)
      
 
@@ -179,16 +215,32 @@ def write_csv(file_name,str2write):
 
 
 class Shitify:
-    def __init__(self, l_date_format, l_separator, list_delim):
+    def __init__(self, l_date_format,
+                  l_separator,
+                    list_delim,
+                    add_header=True,
+                    # dic_shitify_function=None,
+                    Shuffle_cells_params = {"activate": False,"probability" : 0.5},
+                    add_columns= {"activate": False,"probability" : 0.5},
+                    dic_delete_end_char= {"activate": False,"probability" : 0.4},
+                    list_encode =None # ["ascii",'utf_32',"UTF-8", "ISO-8859-15","UNICODE"] 
+                    ):
         self.l_date_format = l_date_format
         self.l_separator = l_separator
         self.l_delim = list_delim
+        self.add_header = add_header
+        self.Shuffle_cells_params = Shuffle_cells_params
+        self.add_columns = add_columns
+        # self.dic_shitify_function = dic_shitify_function
+        self.dic_delete_end_char = dic_delete_end_char
+        self.list_encode = list_encode
 
 
 
 
 
-####################
+
+###############
 ### main ###
 ##############
 
@@ -209,10 +261,8 @@ def fun_generate_datas(path_csv, groundtruth_file , prefix_name_output, nb_perso
     for i in range(0,nb_csv_file) : 
         file_name = path_csv+prefix_name_output+str(i)+".csv"
 
-        # if(random.random()<0.1 ):
-        #     add_quote = False
-        # else : 
-        #     add_quote = True
+
+        ## Parameters for the whole file : 
         if(force_order):
             str_date_format= shitify_params.l_date_format[i]
             delimiter  = shitify_params.l_delim[i]
@@ -221,14 +271,36 @@ def fun_generate_datas(path_csv, groundtruth_file , prefix_name_output, nb_perso
             str_date_format= random.sample(shitify_params.l_date_format,1)[0]
             delimiter  = random.sample(shitify_params.l_delim,1)[0]
             separator  = random.sample(shitify_params.l_separator,1)[0]
-                
+
+        if (shitify_params.Shuffle_cells_params["activate"] and random.random()  < shitify_params.Shuffle_cells_params["probability"]):
+            nb_cells = len(dic_pers[id].values())
+            # index= ...
+            
+        #todo add value to same 
         
+
+
+
+
+
         print(f"file_name : {file_name}, date_format : {str_date_format}, delimiter={delimiter},separator={separator}")
 
-        str_file = to_str_csv_format(dic_pers,list_split[i],
+        header_str =""
+        if shitify_params.add_header :
+            header_str = delimiter + (delimiter+separator+delimiter).join(Headers) + delimiter +'\n'
+
+        str_file = header_str + to_str_csv_format(dic_pers,list_split[i],
                                      delimiter=delimiter,
                                      str_date_format=str_date_format,
-                                     separator=separator)
+                                     separator=separator, 
+                                     shitify_params= shitify_params)
+        
+        # random_shitify_function = random.choice(shitify_params.dic_shitify_function.keys(), shitify_params.dic_shitify_function.values())
+
+        if(shitify_params.list_encode ) :
+            encoding  = random.sample(shitify_params.list_encode,1)[0]
+            str_file = str_file.encode(encoding=encoding)
+
         write_csv(file_name,str_file)
 
     return ; 
@@ -236,9 +308,9 @@ def fun_generate_datas(path_csv, groundtruth_file , prefix_name_output, nb_perso
 
 print(f"easy list separator={list_seperator_easy}")
 
+#generate easy _files
 Shitify_easy = Shitify(list_date_format_easy,list_seperator_easy,list_delim_easy)
 
-#generate easy _files
 fun_generate_datas(path_csv= path_csv,
                    prefix_name_output =csv_base_name_easy,
                    groundtruth_file=  groundtruth_file_easy,
@@ -247,16 +319,20 @@ fun_generate_datas(path_csv= path_csv,
                     shitify_params = Shitify_easy
                     )
 
-
-Shitify_hard = Shitify(list_date_format_hard,list_seperator_hard,list_delim_hard)
 #generate_hard files
+
+Shitify_hard = Shitify(list_date_format_hard,list_seperator_hard,list_delim_hard,
+                       add_header=False,
+                       list_encode = None )# ["UTF-8",'utf_32', "ISO-8859-15","UNICODE"] ) #"ascii"
+
+
 fun_generate_datas(path_csv= path_csv,
                    prefix_name_output =csv_base_name_hard, 
                    groundtruth_file=  groundtruth_file_hard,
                    nb_persons= eval_nb_persons_hard,
                    nb_csv_file= eval_nb_csv_file_hard, 
-                    shitify_params = Shitify_hard
-                    )
+                   shitify_params = Shitify_hard
+                )
 
 
 

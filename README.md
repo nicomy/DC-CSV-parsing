@@ -57,17 +57,16 @@ To add shitify ideas, edit the file :
 
 ## Some explanations (in French ^^): 
 -je génère la vérité qui ressemble  à ça  (dans le code je manipule tout en dictionnaire) : 
-```
-    # { "0" : 
-    #     {  
-    #     "first_name": "Stéphanie",
-    #     "last_name": "Lebrun",
-    #     "adress": "61, boulevard de Peltier\n82421 Paris",
-    #     "date": "2010-08-08"
-    #     }
-        ...
-    # }
-
+```{json}
+{
+  "0": {
+    "address": "14",
+    "date": " rue Martins\\n95846 Rousset-les-Bains",
+    "first_name": "Margaux",
+    "last_name": "Antoine"
+  },
+   ...
+ }
 ```
  -   Je supprime aléatoirement quelques champ de données.
 - Je sauvegarde la vérité sous forme de json. 
@@ -76,22 +75,28 @@ To add shitify ideas, edit the file :
   -  Je répartis aléatoirement les données vérités en n sous fichiers/données qui sont merdifié 
       *  je change aléatoirement le format de la date pour l'instant j'ai ça comme autre format  : 
         	list_date_format= ['%d/%m/%Y','%m/%d/%Y','%Y:%m:%d:00:00']
-       * Certains fichier csv ne contiennent pas de quotes entre les champ
-  -  File0.csv : 
-    ```
-        "110","Auguste","Girard","25, avenue Pichon\n21754 Texiernec","2025-03-13"
-        "90","Gabrielle","Schmitt","7, boulevard Germain\n79264 Sainte Richardnec","2006-12-07"
-        "979","Olivie","Michel","14, rue Éric Goncalves\n90423 Lacombe","1972-05-26"
-        "592","Sophie","Berger","7, chemin Renault\n84405 Valléeboeuf","04/04/2000"
-    ```
+       * Certains fichier csv ne contiennent pas de quotes entre les champs
 
-    -File1.csv : 
-    ```
-        865,Capucine,Briand,4, chemin de Jean\n97260 Sainte Véronique,1970-08-02
-        20,Luce,Berger,14, chemin Bertrand Pages\n93207 Guichard,1980-02-17
-        745,Chantal,Lefort,887, avenue Marchal\n56881 Morvan,
-        315,,,,2002-02-08
-    ```
+    
+-  File0.csv : 
+```
+"17","Thierry","De Sousa","29, rue de Blanchard\n65701 BuissonVille","16/11/2005"
+"16","Danielle","Fernandez","41, avenue Legros\n79170 Saint Sophieboeuf","18/10/2014"
+"6","Simone","Coste","24, boulevard Julien\n58641 HoarauVille","26/08/2016"
+"18","Philippine","Bazin","76, chemin Olivier\n97373 Berger","23/12/2005"
+"0","Margaux","Antoine","14, rue Martins\n95846 Rousset-les-Bains","26/01/1971"
+"7","Pierre","Payet","67, boulevard De Sousa\n44558 Saint Valentine","03/06/1975"
+"8","Diane","Leclercq","chemin de Le Goff\n02778 Blanchardboeuf","28/01/1977"
+"9","Guillaume","Grenier","25, avenue de Joubert\n25387 Fernandesnec","29/10/1973"
+```
+
+-File1.csv : 
+```
+19;Nath;Carpentier;47, rue de Carpentier\n74108 Bernier-la-Forêt;07-03-1975
+2;Alexandre;Guilbert;83, chemin de Allard\n64142 Gillet-les-Bains;10-05-1983
+0;Philippe;Lemoine;30, avenue de Mercier\n47411 Paris-les-Bains;20-07-1981
+3;Élise;Delannoy;724, rue Potier\n14392 Sainte Brigitte;08-09-1979
+```
 
 Pour l'évaluation: 
 
