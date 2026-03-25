@@ -10,10 +10,8 @@ popd
 rm -rf starting_kit/data
 mkdir -p starting_kit/data
 pushd starting_kit/data
-ln -s ../../data/starting_csv/file0.csv .
-ln -s ../../data/starting_csv/file1.csv .
+ln -s ../../data/starting_csv/*.csv .
 popd
-
 
 
 
@@ -30,4 +28,4 @@ zip -FS -j -r  bundle/ground_truth.zip data/data_groundtruth/
 
 cd starting_kit/ ; zip  -FS  -r  ../bundle/starting_kit.zip *  -x \*submissions\* ; cd .. ; 
 zip -FS -r -j bundle.zip bundle/
-echo "Bundle.zip created, upload it on Codabench, under benchmark, management and upload"
+echo "Bundle.zip created, upload it on Codabench, under benchmark, management and upload"Input Data	

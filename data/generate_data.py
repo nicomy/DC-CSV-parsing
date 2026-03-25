@@ -59,7 +59,7 @@ if not os.path.exists(path_csv_starting_kit):
 ########## Shitify parameters
 
 original_date_format='%d/%m/%Y'
-list_date_format_easy= ['%d/%m/%Y','%Y-%m-%d','%m/%d/%Y','%Y:%m:%d:00:00',original_date_format, "%c" , '%d,%m,%Y']
+list_date_format_easy= [original_date_format,'%d-%m-%Y','%Y-%m-%d','%m/%d/%Y','%Y:%m:%d:00:00', "%c" , '%d,%m,%Y']
 list_date_format_hard = list_date_format_easy + ["%A %d %B %Y", "%d%m%Y",'%m/%d/%y' "Week:%V-%d/%m/%Y-time:%H%S" ]
 
 
@@ -195,7 +195,7 @@ class Shitify:
 
 #### generate evaluation datas easy 
 
-def fun_generate_datas(path_csv, groundtruth_file , prefix_name_output, nb_persons,nb_csv_file, shitify_params):
+def fun_generate_datas(path_csv, groundtruth_file , prefix_name_output, nb_persons,nb_csv_file, shitify_params,force_order=False):
 
     dic_pers = generate_groundtruth(nb_persons)
     dic_pers = remove_data(dic_pers,int(nb_persons/10))
@@ -213,11 +213,15 @@ def fun_generate_datas(path_csv, groundtruth_file , prefix_name_output, nb_perso
         #     add_quote = False
         # else : 
         #     add_quote = True
-        
-        str_date_format= random.sample(shitify_params.l_date_format,1)[0]
-        delimiter  = random.sample(shitify_params.l_delim,1)[0]
-        separator  = random.sample(shitify_params.l_separator,1)[0]
-            
+        if(force_order):
+            str_date_format= shitify_params.l_date_format[i]
+            delimiter  = shitify_params.l_delim[i]
+            separator  = shitify_params.l_separator[i]
+        else : 
+            str_date_format= random.sample(shitify_params.l_date_format,1)[0]
+            delimiter  = random.sample(shitify_params.l_delim,1)[0]
+            separator  = random.sample(shitify_params.l_separator,1)[0]
+                
         
         print(f"file_name : {file_name}, date_format : {str_date_format}, delimiter={delimiter},separator={separator}")
 
@@ -267,7 +271,8 @@ fun_generate_datas(path_csv= path_csv_starting_kit,
                    groundtruth_file=groundtruth_file_starting,
                    nb_persons= starting_nb_persons,
                    nb_csv_file= starting_nb_csv_file, 
-                    shitify_params = Shitify_starting
+                    shitify_params = Shitify_starting,
+                    force_order=True
                     )
 
 

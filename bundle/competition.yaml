@@ -4,7 +4,7 @@ docker_image: python
 # queue:  a05e3a5f-09df-40e3-978e-02f147289877 
 description: Gricad parsing CSV Challenge
 registration_auto_approve: true
-enable_detailed_results: true
+enable_detailed_results: false
 image: csv_2_json.drawio.png
 terms: terms.md
 make_programs_available: false
@@ -36,11 +36,11 @@ phases:
   name: Main Task parsing CSV
   description: good luck UwU
   # start: '2024-02-20 '
-  start: '2024-11-29 '
+  start: '2025-03-25'
   # end: '2024-03-20 10:40'
   # end: '2030-12-03 17:30'
-  max_submissions_per_day: 100
-  max_submissions: 100
+  max_submissions_per_day: 1000
+  max_submissions: 1000
   execution_time_limit: 600000
   auto_migrate_to_this_phase: false
   hide_output: true
@@ -104,19 +104,24 @@ leaderboards:
     index: 2
     sorting: desc
     hidden: false
-  - title: Percentage of correct adress
-    key: percentage_adress_easy
+  - title: Percentage of correct address
+    key: percentage_address_easy
     index: 3
     sorting: desc
     hidden: false
-  - title: Percentage of correct adress
-    key: percentage_adress_easy
-    index: 3
-    sorting: desc
+  - title: Percentage of ignored files
+    key: percentage_files_missed_easy
+    index: 4
+    sorting: asc
+    hidden: false
+  - title: Total time to parse the csv files.
+    key: time_easy
+    index: 5
+    sorting: asc
     hidden: false
 - index: 2
   title: Best CSV-breaker - hard mode 
-  key: score-hard
+  key: score_hard
   hidden: true
   submission_rule: "Force_Best"
   columns:
@@ -134,15 +139,20 @@ leaderboards:
     index: 2
     sorting: desc
     hidden: false
-  - title: Percentage of correct adress
-    key: percentage_adress_hard
+  - title: Percentage of correct address
+    key: percentage_address_hard
     index: 3
     sorting: desc
     hidden: false
-  - title: Percentage of correct adress
-    key: percentage_adress_hard
-    index: 3
-    sorting: desc
+  - title: Percentage of ignored files
+    key: percentage_files_missed_hard
+    index: 4
+    sorting: asc
+    hidden: false
+  - title: Total time to parse the *hard* csv files.
+    key: time_hard
+    index: 5
+    sorting: asc
     hidden: false
   # - title: overall performance dataset 4
   #   key: Accuracy_mean_4

@@ -33,7 +33,7 @@ output_profiling = args.output+os.sep + "Rprof.txt"
 
 #Check it is a result submission or a program submission
 program_py = args.submission_program+ os.sep + "program.py"
-output_results  = args.output+ os.sep + "output.json"
+# output_results  = args.output+ os.sep + "output.json"
 
 if (os.path.isfile(program_py)) :
 
@@ -41,25 +41,9 @@ if (os.path.isfile(program_py)) :
 
   cmd = ["python", args.ingestion_program +os.sep+  "sub_ingestion.py", args.input , args.output, args.submission_program,output_profiling]
   print(" ".join(cmd))
-  # system(command = paste("python", paste0(ingestion_program, .Platform$file.sep, "sub_ingestion.py"), input, output, submission_program,output_profiling, sep = " ") )
   subprocess.call(cmd)
 else :
-    print("no program to execute, go straight to scoring step") 
-    print(" output_profiling file:" + output_profiling)
-    # l_time = list()
-
-    # dir_name = args.input + os.sep
-    # dataset_list = list.files(dir_name,pattern="mixes*")
-    # total_time = 86400 #24 h in seconds! 
-
-    # for (dataset_name in dataset_list){
-
-    #   cleaned_dataset_name <- sub("\\.h5$", "", unlist(strsplit(dataset_name, "_"))[2])
-
-    #   l_time[[cleaned_dataset_name]] = total_time
-    # }
-
-    # write_hdf5(output_profiling,l_time)
+    print("no program to execute !") 
 
 
 

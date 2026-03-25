@@ -42,6 +42,8 @@ output_profiling = args.output_profiling.strip()
 print(f"output_profiling file: {output_profiling}")
 
 
+nb_file_ignored = 0 
+
 # Install and import each package
 def install_and_import_packages(required_packages):
   for package in required_packages:
@@ -81,21 +83,20 @@ def generate_prop_dic(prefix_file="file_easy", prediction_name="output_easy.json
             pred_prop = program(list_csv_data )
         except Exception as exc:
             print(f"WARNING : this file {dataset_name} is ignored because of the error : {exc}\n" )
-            # import traceback 
-            # print (traceback.format_exc())
-            # print("However the zip is still being produced.")
+            import traceback 
+            print (traceback.format_exc())
             pred_prop= {}
+            nb_file_ignored +=1
         
-        # if(! all(isinstance(key, int) for key in pred_prop.keys())):
         try : 
             for key in pred_prop.keys(): 
                 int(key)
         except Exception as exc:
             print(f"WARNING : this file {dataset_name} is ignored because the id could not be converted into an integer \n" )
             pred_prop= {}
-            # import traceback 
-            # print (traceback.format_exc())
-            # print("However the zip is still being produced.")
+            import traceback 
+            print (traceback.format_exc())
+            nb_file_ignored +=1
 
         pred_dic = pred_dic | pred_prop
 
