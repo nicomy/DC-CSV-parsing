@@ -226,19 +226,6 @@ write_in_json(  pred_dic, os.path.join("submissions", prediction_name))
 ###  EVALUATION function
 ############################
 
-def percentage_of_correct_rows(dic_truth, dic_pred):
-    # print("evaluatig results")
-    nb_total_rows = len(dic_truth)
-    nb_correct_rows = 0 
-    for id,dic_truth_values in dic_truth.items():
-        # print(dic_truth_values)
-        if id not in dic_pred : 
-            continue
-        dic_pred_values = dic_pred[id]
-        if dic_truth_values == dic_pred_values :
-            nb_correct_rows +=1
-    # print(nb_correct_rows)
-    return (nb_correct_rows/nb_total_rows)
 
 def percentage_correct(dic_truth, dic_pred,sub_key=None):
     nb_total_rows = len(dic_truth)

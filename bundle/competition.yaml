@@ -36,7 +36,7 @@ phases:
   name: Main Task parsing CSV
   description: good luck UwU
   # start: '2024-02-20 '
-  start: '2025-03-25'
+  start: '2026-03-25 6:00'
   # end: '2024-03-20 10:40'
   # end: '2030-12-03 17:30'
   max_submissions_per_day: 1000
@@ -129,6 +129,7 @@ leaderboards:
     key: percentage_rows_hard
     precision: 3
     index: 6
+    hidden: true 
     sorting: desc
   - title: correct names-hard
     key: percentage_names_hard

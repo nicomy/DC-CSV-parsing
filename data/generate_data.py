@@ -62,7 +62,7 @@ if not os.path.exists(path_csv_starting_kit):
 
 original_date_format='%d/%m/%Y'
 list_date_format_easy= [original_date_format,'%d-%m-%Y','%Y-%m-%d','%m/%d/%Y','%Y:%m:%d:00:00', "%c" , '%d,%m,%Y']
-list_date_format_hard = list_date_format_easy + ["%A %d %B %Y", "%d%m%Y",'%m/%d/%y' "Week:%V-%d/%m/%Y-time:%H%S" ]
+list_date_format_hard = list_date_format_easy + ["%A %d %B %Y", "%d%m%Y",'%m/%d/%y', "Week:%V-%d/%m/%Y-time:%H%S" ]
 
 
 list_seperator_easy = ['\t' , ',' , ';' , '|']
@@ -71,7 +71,7 @@ list_seperator_hard = list_seperator_easy + [random.randint(1,10)*" ", random.ra
 
 
 list_delim_easy =["",'"']
-list_delim_hard =list_delim_easy +['`', '“',]
+list_delim_hard =list_delim_easy +['`', '“',"-"]
 
 
 
@@ -174,7 +174,7 @@ class Shitify:
     dic_dat_type_faker_fun_generator = {"license_plate":fake.license_plate,"catch_phrase":fake.catch_phrase, "company":fake.company  }
     index_insert_new_col = None
     new_col_fun_gen = None
-    new_HEADERS = HEADERS 
+    new_HEADERS = HEADERS.copy()
 
 
     # license_plate 
@@ -198,46 +198,56 @@ class Shitify:
         # self.dic_shitify_function = dic_shitify_function
         self.dic_delete_end_char = dic_delete_end_char
         self.list_encode = list_encode
-        self.index_order= None
+
+        # self.index_order= None
         
 
     def set_cells_order_index(self,nb_cells):
             # nb_cells = len(dic_pers[id].values())
         if (self.Shuffle_cells_params["activate"] and random.random()  < self.Shuffle_cells_params["probability"]):
-            self.l_index_order = list(range(nb_cells+1)) #we include the id in the shuffle. 
+            self.l_index_order = list(range(nb_cells))
             random.shuffle(self.l_index_order)
-        return
+        else:
+            self.l_index_order = None
 
     def get_new_cells_order(self,list_row): 
-        if(self.l_index_order):
+        if(self.l_index_order is not None):
+            print(list_row)
+            print(self.l_index_order)
+            print(self.new_HEADERS)
+            print(self.index_insert_new_col)
             return [list_row[i] for i in self.l_index_order]
         else :
             return list_row
     
-
-
-    def set_new_col_gen(self,nb_cells):
-        if (self.add_columns["activate"] and random.random()  < self.add_columns["probability"]):
-            self.index_insert_new_col = random.randint(0,nb_cells)
+    def set_new_col_gen(self, nb_cells):
+        self.new_HEADERS = HEADERS.copy()  
+        self.index_insert_new_col = None
+        self.new_col_fun_gen = None
+        if (self.add_columns["activate"] and random.random() < self.add_columns["probability"]):
+            self.index_insert_new_col = random.randint(0, nb_cells)
             col_name = random.choice(list(self.dic_dat_type_faker_fun_generator.keys()))
             self.new_col_fun_gen = self.dic_dat_type_faker_fun_generator[col_name]
             self.new_HEADERS.insert(self.index_insert_new_col, col_name)
-            # print(self.new_HEADERS)
-            # print(self.index_insert_new_col, nb_cells),
-    
+        # else:
 
 
     def set_header(self):
-        if(not self.add_header):
+        if not self.add_header:
             return ""
-        else :
-            return self.get_new_cells_order(self.new_HEADERS)
+        return self.get_new_cells_order(self.new_HEADERS)
+
+
+    # def set_header(self):
+    #     if(not self.add_header):
+    #         return ""
+    #     else :
+    #         return self.get_new_cells_order(self.new_HEADERS)
 
     def generate_new_list_with_added_column(self,list_row):
-        if (not self.index_insert_new_col ):
+        if (self.index_insert_new_col is None ):
             return list_row
         else : 
-
             new_data =self.new_col_fun_gen()
             # print(new_data, self.index_insert_new_col)
             list_row.insert(self.index_insert_new_col,new_data)
@@ -279,11 +289,10 @@ def to_str_csv_format(dic_pers,list_id,delimiter='"',
         list_row = [str(id)]+ list(dic_pers[id].values())
         # list_row =  list(dic_pers[id].values())
 
-        list_row = shitify_params.get_new_cells_order(list_row)
-        list_row = shitify_params.generate_new_list_with_added_column(list_row)
 
-        # str_row += delimiter + str(id) +delimiter + separator
-        # str_row += '"' + '","'.join(list_row) + '"'
+        list_row = shitify_params.generate_new_list_with_added_column(list_row) 
+        list_row = shitify_params.get_new_cells_order(list_row)   
+
         str_row += delimiter + (delimiter+separator+delimiter).join(list_row) + delimiter
 
         if(not(shitify_params and shitify_params.dic_delete_end_char["activate"] and random.random() < shitify_params.dic_delete_end_char["probability"])) : 
@@ -318,15 +327,13 @@ def fun_generate_datas(path_csv, groundtruth_file , prefix_name_output, nb_perso
             separator  = random.sample(shitify_params.l_separator,1)[0]
 
         nb_cells = len(dic_pers[0].values())
-        shitify_params.set_cells_order_index(nb_cells)
-        shitify_params.set_new_col_gen(nb_cells)
+        shitify_params.set_new_col_gen(nb_cells)      
+        shitify_params.set_cells_order_index(len(shitify_params.new_HEADERS))
+        l_headers = shitify_params.set_header() 
 
-            # mylist = [mylist[i] for i in l_index_order]
 
         print(f"file_name : {file_name}, date_format : {str_date_format}, delimiter={delimiter},separator={separator}")
 
-
-        l_headers = shitify_params.set_header()
         header_str =""
         if shitify_params.add_header :
             header_str = delimiter + (delimiter+separator+delimiter).join(l_headers) + delimiter +'\n'
@@ -386,7 +393,7 @@ Shitify_hard = Shitify(list_date_format_hard,list_seperator_hard,list_delim_hard
                        add_header=False,
                        dic_delete_end_char= {"activate": True,"probability" : 0.1},
                        Shuffle_cells_params = {"activate": True,"probability" : 0.3},
-                       add_columns= {"activate": True,"probability" : 0.25},
+                       add_columns= {"activate": True,"probability" :   0.25},
                        list_encode = None )# ["UTF-8","ascii",'utf_32', "ISO-8859-15","UNICODE"] ) #"ascii"
 
 fun_generate_datas(path_csv= path_csv,
