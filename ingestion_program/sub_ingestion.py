@@ -84,6 +84,9 @@ def generate_prop_dic(prefix_file="file_easy", prediction_name="output_easy.json
 
         try:
             pred_prop = program(list_csv_data )
+            start = timer()
+            pred_dic = pred_dic | pred_prop
+            end = timer()
         except Exception as exc:
             print(f"WARNING : this file {dataset_name} is ignored because of the error : {exc}\n" )
             import traceback 
@@ -101,9 +104,7 @@ def generate_prop_dic(prefix_file="file_easy", prediction_name="output_easy.json
         #     print (traceback.format_exc())
         #     nb_file_ignored +=1
 
-        start = timer()
-        pred_dic = pred_dic | pred_prop
-        end = timer()
+
         total_time += end-start
 
 
@@ -119,7 +120,8 @@ def generate_prop_dic(prefix_file="file_easy", prediction_name="output_easy.json
 
 # Reading and executing the code submitted by the participants
 program_file = os.path.join(submission_program, 'program.py')
-# Ensure that the file exists before attempting to read it
+
+
 if os.path.isfile(program_file):
     with open(program_file, 'r') as file:
         program_code = file.read()
@@ -127,7 +129,7 @@ if os.path.isfile(program_file):
 else:
     print(f"File not found: {program_file}")
 
-# Example: calling the function 'program' if it's defined in the submitted code
+
 if 'program' in globals():
     pass
 else:

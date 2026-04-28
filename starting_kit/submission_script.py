@@ -18,7 +18,7 @@ def program(list_rows_one_file):
   ## YOUR CODE BEGINS HERE
   ##
 
-  # required_packages = ["sklearn","pandas",'scipy',.. add you package ]
+  # required_packages = ["sklearn","pandas",'scipy',.. add your package ]
   # install_and_import_packages(required_packages)
 
   dic_results = {}
@@ -34,7 +34,8 @@ def program(list_rows_one_file):
     dic_results[id] = {"first_name": list_column[1],
                        "last_name": list_column[2],
                        "address": list_column[3].replace("\\n","\n"),
-                       "date": list_column[4].removesuffix("\n")}
+                       "date": list_column[4]
+                       }
 
 
     # exemple  of dictionnary output 
@@ -43,13 +44,14 @@ def program(list_rows_one_file):
     #     "first_name": "Stéphanie",
     #     "last_name": "Lebrun",
     #     "adress": "61, boulevard de Peltier\n82421 Paris",
-    #     "date": "2010-08-08"
+    #     "date": "30/05/2010"
     #     }
     # }
-  return dic_results
+
   ##
   ## YOUR CODE ENDS HERE
   ##
+  return dic_results
 
 
 

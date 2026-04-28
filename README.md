@@ -106,6 +106,14 @@ Pour l'évaluation:
     - Avec la baseline (méthode qu'on donne au participants pour simplifier le démarrage) on a un score de 16 % de ligne bien reconstruite. 
 
 
+## Retour Gricad Coding Challenge
+
+* bien preciser les champs importants : dates, nom, et address sont les seules qui servent pour coder. 
+* Ajouter un detailed results 
+* montrer un exemple de l'entrée du program. 
+
+
 ## Ack.
 
 CREATED WITHOUT IA :> 
+
