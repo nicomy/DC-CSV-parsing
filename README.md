@@ -11,7 +11,8 @@
 install env.  
 
 ```
-mamba create -n gdc_env
+conda create -n gdc_env
+conda activate gdc_env
 conda install faker
 ```
 
@@ -31,10 +32,11 @@ bash test_docker_locally.sh
 ```
 
 
-generate bundel
+generate bundle
 ```
 bash gen_bundle.sh
 ```
+
 
 ## Shitify datas
 

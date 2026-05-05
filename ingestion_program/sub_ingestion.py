@@ -87,25 +87,14 @@ def generate_prop_dic(prefix_file="file_easy", prediction_name="output_easy.json
             start = timer()
             pred_dic = pred_dic | pred_prop
             end = timer()
+            total_time += end-start
         except Exception as exc:
             print(f"WARNING : this file {dataset_name} is ignored because of the error : {exc}\n" )
             import traceback 
             print (traceback.format_exc())
             pred_prop= {}
             nb_file_ignored +=1
-        
-        # try : 
-        #     for key in pred_prop.keys(): 
-        #         int(key)
-        # except Exception as exc:
-        #     print(f"WARNING : this file {dataset_name} is ignored because the id could not be converted into an integer \n" )
-        #     pred_prop= {}
-        #     import traceback 
-        #     print (traceback.format_exc())
-        #     nb_file_ignored +=1
 
-
-        total_time += end-start
 
 
 
