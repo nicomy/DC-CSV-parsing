@@ -1,8 +1,7 @@
 version: '2'
-title: Gricad parsing CSV Challenge
+title: parsing CSV Challenge
 docker_image: python
-queue:  a05e3a5f-09df-40e3-978e-02f147289877 
-description: Gricad parsing CSV Challenge
+description: parsing CSV Challenge
 registration_auto_approve: true
 enable_detailed_results: false
 image: csv_2_json.drawio.png
@@ -14,18 +13,10 @@ pages:
   file: overview.md
 - title: How do I start?
   file: how-do-i-start.md
-# - title: Submission
-#   file: submission.md
-# - title: Evaluation and scoring
-#   file: evaluation-and-scoring.md
-# - title: FAQ
-#   file: FAQ.md
-# - title: About
-#   file: about.md  
 tasks:
 - index: 0
   name: Main Task
-  description: Gricad CSV data challenge
+  description: CSV data challenge
   reference_data: ground_truth.zip 
   input_data: input_data.zip
   scoring_program: scoring_program.zip
@@ -35,10 +26,7 @@ phases:
 - index: 0
   name: Main Task parsing CSV
   description: good luck UwU
-  # start: '2024-02-20 '
   start: '2026-03-25 6:00'
-  # end: '2024-03-20 10:40'
-  # end: '2030-12-03 17:30'
   max_submissions_per_day: 1000
   max_submissions: 1000
   execution_time_limit: 600000
@@ -48,46 +36,9 @@ phases:
   tasks:
   - 0
 
-# # Fact sheets to add more information in the leaderboard
-# fact_sheet: {
-#     "Language": {
-#         "key": "Language",
-#         "type": "select",
-#         "title": "Language",
-#         "selection": ["R", "Python"],
-#         "is_required": "true",
-#         "is_on_leaderboard": "true"
-#     },
-#     "refererence": {
-#         "key": "refererence",
-#         "type": "select",
-#         "title": "type of refererences used",
-#         "selection": ["meth/rna/scrna", "meth/scrna", "meth/rna", "rna/scrna","rna/meth", "meth","rna","scrna"],
-#         "is_required": "true",
-#         "is_on_leaderboard": "true"
-#     },
-#     "method_name": {
-#         "key": "method_name",
-#         "type": "text",
-#         "title": "Method name (single word)",
-#         "selection": "",
-#         "is_required": "true",
-#         "is_on_leaderboard": "true"
-#     },
-#         "description": {
-#         "key": "description",
-#         "type": "text",
-#         "title": "description",
-#         "selection": "",
-#         "is_required": "false",
-#         "is_on_leaderboard": "true"
-#     }
-# }
 leaderboards:
-# - index: 0
 - title: Best CSV-breaker 
   key: score
-  # hidden: false
   submission_rule: "Force_Best"
   columns:
   - title: correct rows
@@ -161,13 +112,3 @@ leaderboards:
     index: 11
     sorting: asc
     hidden: true
-  # - title: overall performance dataset 4
-  #   key: Accuracy_mean_4
-  #   index: 4
-  #   sorting: desc
-  #   hidden: false
-  # - title: Excecution Time global
-  #   key: Time
-  #   index: 5
-  #   sorting: desc
-  #   hidden: false

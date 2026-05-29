@@ -7,17 +7,6 @@ import sys
 from timeit import default_timer as timer
 
 
-# try:
-#     # Define the target and link name
-#     target = "../ingested_program/attachement/"
-#     link_name = "attachement"
-    
-#     os.symlink(target, link_name)
-# except FileExistsError:
-#     # Handle the case where the symbolic link already exists
-#     os.unlink(link_name)  # Remove the existing symbolic link
-#     os.symlink(target, link_name)  # Recreate the
-
 
 # Parsing command-line arguments
 parser = argparse.ArgumentParser(description='Process some paths.')
@@ -83,10 +72,10 @@ def generate_prop_dic(prefix_file="file_easy", prediction_name="output_easy.json
 
 
         try:
-            pred_prop = program(list_csv_data )
             start = timer()
-            pred_dic = pred_dic | pred_prop
+            pred_prop = program(list_csv_data )
             end = timer()
+            pred_dic = pred_dic | pred_prop
             total_time += end-start
         except Exception as exc:
             print(f"WARNING : this file {dataset_name} is ignored because of the error : {exc}\n" )
@@ -95,11 +84,6 @@ def generate_prop_dic(prefix_file="file_easy", prediction_name="output_easy.json
             pred_prop= {}
             nb_file_ignored +=1
 
-
-
-
-
-    # pred_dic= {int(k):v for k,v in pred_dic.items() }
     write_in_json(  pred_dic, os.sep.join([output_results,prediction_name]))
 
     return total_time, nb_file_ignored/len(datasets_list) ; 
@@ -142,41 +126,4 @@ write_in_json(dic_res={"time_easy":time_easy,
               file=os.sep.join([output_results,"profiling.json"])
               )
 
-
-
-
-
-
-
-
-# datasets_list = [filename for filename in os.listdir(dir_name) if filename.startswith("mixes")]
-
-
-# total_time = 0 
-
-# d_time = {}
-
- 
-# predi_dic = {}
-# for dataset_name in datasets_list :
-
-#     file= os.path.join(dir_name,dataset_name)
-#     mixes_data = dp.read_hdf5(file)
-
-#     print(f"generating prediction for dataset: {dataset_name}")
-
-#     start_time = time.perf_counter()
-#     # pred_prop = program(mix_rna, ref_bulkRNA, mix_met=mix_met, ref_met=ref_met   )
-#     pred_prop = program(mixes_data["mix_rna"], reference_data["ref_bulkRNA"], mix_met=mixes_data["mix_met"], ref_met=reference_data["ref_met"]   )
-
-#     prog_time = time.perf_counter() - start_time
-
-#     cleaned_name=dataset_name.replace("mixes_", "").removesuffix(".h5")
-#     d_time[cleaned_name] = prog_time
-#     total_time += prog_time
-#     predi_dic[cleaned_name] = pred_prop
-
-
-# dp.write_hdf5(os.path.join(output_results),predi_dic)
-# dp.write_hdf5(os.path.join(output_profiling_h5),d_time)
 

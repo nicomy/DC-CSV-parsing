@@ -104,7 +104,6 @@ def score(dataset_lvl_name = "easy" , profiling_file = "profiling.json"):
         percentage_files_missed =dic_prof[files_missed_name]
 
     # percentage 
-    # percentage_correct_rows = percentage_of_correct_rows(dic_truth=dic_truth,dic_pred=dic_prediction)
     percentage_correct_rows = percentage_correct(dic_truth=dic_truth,dic_pred=dic_prediction,sub_key=None)
     print("percentage of correct rows : ",percentage_correct_rows)
 
@@ -151,43 +150,9 @@ def write_in_json(dic_res,file):
         f.write(json_pers)
 
 
-# output_name ="scores_"+dataset_lvl_name+".txt"
 output_name ="scores.json"
 
 output_file = args.output+os.sep + output_name
 
 write_in_json(  dic_res_easy| dic_res_hard, output_file)
-
-
-# groundthruth_name = "truth_easy.json"
-# truth_file = args.input + os.sep +'ref' + os.sep + groundthruth_name
-
-# with open(truth_file) as f : 
-#     dic_truth = json.load(f)
-
-# participant_file_name = "output_easy.json"
-# prediction_file = args.input+os.sep+ "res" +os.sep+ participant_file_name
-
-# with open(prediction_file) as fp : 
-#     dic_prediction = json.load(fp)
-
-
-# # percentage 
-# percentage_correct_rows = percentage_of_correct_rows(dic_truth=dic_truth,dic_pred=dic_prediction)
-
-# print("percentage of correct rows : ",percentage_correct_rows)
-
-
-# output_file = args.output+os.sep +"scores_easy.txt"
-
-# with open(output_file,'w') as f_output : 
-#     f_output.write("percentage : " + str(percentage_correct_rows))
-
-# print("Output :")
-# print(os.listdir(args.output))
-# print("")
-
-
-
-
 
