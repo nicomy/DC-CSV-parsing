@@ -72,11 +72,9 @@ def percentage_correct(dic_truth, dic_pred,sub_key=None):
 
     return (nb_correct_sub_keys/nb_total_rows)
 
-
 ###########################################################
 # Reading files and scoring function
 ###########################################################
-
 
 def score(dataset_lvl_name = "easy" , profiling_file = "profiling.json"):
     print(f"\n\nScoring {dataset_lvl_name} dataset")
@@ -131,10 +129,6 @@ def score(dataset_lvl_name = "easy" , profiling_file = "profiling.json"):
     return dic_res
         
 
-
-
-
-
 dic_res_easy = score(dataset_lvl_name = "easy")
 dic_res_hard = score(dataset_lvl_name = "hard")
 
@@ -142,17 +136,12 @@ print("Output :")
 print(os.listdir(args.output))
 print("")
 
-
-
 def write_in_json(dic_res,file):
     json_pers = json.dumps(dic_res, indent=2, sort_keys=True,  ensure_ascii=False)
     with open(file,"w") as f :
         f.write(json_pers)
 
-
 output_name ="scores.json"
-
 output_file = args.output+os.sep + output_name
-
 write_in_json(  dic_res_easy| dic_res_hard, output_file)
 
