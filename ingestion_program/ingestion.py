@@ -33,17 +33,17 @@ output_profiling = args.output+os.sep + "Rprof.txt"
 
 #Check it is a result submission or a program submission
 program_py = args.submission_program+ os.sep + "program.py"
-# output_results  = args.output+ os.sep + "output.json"
+output_results  = args.output+ os.sep + "output.json"
 
 if (os.path.isfile(program_py)) :
-
   print("Executing a python program")
-
   cmd = ["python", args.ingestion_program +os.sep+  "sub_ingestion.py", args.input , args.output, args.submission_program,output_profiling]
   print(" ".join(cmd))
   subprocess.call(cmd)
+if (os.path.isfile(output_results)) :
+    print("no program to execute ! Go straight to scoring")   
 else :
-    print("no program to execute !") 
+    raise("no program or prediction to execute !") 
 
 
 

@@ -31,7 +31,7 @@ phases:
   max_submissions: 1000
   execution_time_limit: 600000
   auto_migrate_to_this_phase: false
-  hide_output: true
+  hide_output: false
   starting_kit: starting_kit.zip
   tasks:
   - 0
