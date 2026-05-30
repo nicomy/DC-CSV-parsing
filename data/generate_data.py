@@ -212,10 +212,10 @@ class Shitify:
 
     def get_new_cells_order(self,list_row): 
         if(self.l_index_order is not None):
-            print(list_row)
-            print(self.l_index_order)
-            print(self.new_HEADERS)
-            print(self.index_insert_new_col)
+            # print(list_row)
+            # print(self.l_index_order)
+            # print(self.new_HEADERS)
+            # print(self.index_insert_new_col)
             return [list_row[i] for i in self.l_index_order]
         else :
             return list_row
@@ -332,7 +332,7 @@ def fun_generate_datas(path_csv, groundtruth_file , prefix_name_output, nb_perso
         l_headers = shitify_params.set_header() 
 
 
-        print(f"file_name : {file_name}, date_format : {str_date_format}, delimiter={delimiter},separator={separator}")
+        # print(f"file_name : {file_name}, date_format : {str_date_format}, delimiter={delimiter},separator={separator}")
 
         header_str =""
         if shitify_params.add_header :
@@ -358,16 +358,7 @@ def fun_generate_datas(path_csv, groundtruth_file , prefix_name_output, nb_perso
     return ; 
 
 
-print(f"easy list separator={list_seperator_easy}")
-
-
-
-
-    #                 Shuffle_cells_params = {"activate": False,"probability" : 0.2},
-    #                 add_columns= {"activate": False,"probability" : 0.5},
-    #                 dic_delete_end_char= {"activate": False,"probability" : 0.1},
-    #                 list_encode =None # ["ascii",'utf_32',"UTF-8", "ISO-8859-15","UNICODE"] 
-    #                 ):
+# print(f"easy list separator={list_seperator_easy}")
 
 
 

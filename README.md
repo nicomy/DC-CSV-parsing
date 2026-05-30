@@ -13,7 +13,7 @@ install env.
 ```
 conda create -n gdc_env
 conda activate gdc_env
-conda install faker
+conda install faker pyyaml
 ```
 
 
@@ -117,5 +117,5 @@ Pour l'évaluation:
 
 ## Ack.
 
-CREATED WITHOUT IA :> 
+CREATED MOSTLY(only ``validate_bundle.py``) WITHOUT IA :> 
 
