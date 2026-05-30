@@ -28,14 +28,3 @@ python scoring_program/scoring.py  \
     test_output \
     test_output \
     test_output
-
-# Rscript ingestion_program/ingestion.R \
-#     ingestion_program \
-#     input_data \
-#     test_output/res \
-#     starting_kit/submissions
-
-# Rscript scoring_program/scoring.R  \
-#     test_output \
-#     test_output \
-#     scoring_program

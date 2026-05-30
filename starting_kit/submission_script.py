@@ -59,9 +59,6 @@ def program(list_rows_one_file):
 ### Generate a json /!\ DO NOT CHANGE THIS PART ###
 ##############################################################
 
-
-
-
 # Install and import each package
 def install_and_import_packages(required_packages):
     def try_pip_install(package_name):
