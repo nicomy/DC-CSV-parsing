@@ -15,17 +15,6 @@ ln -s  ../../starting_kit/submissions/program.py .
 # ln -s  ../../starting_kit/submissions/output.json .
 popd
 
-# Rscript ingestion_program/ingestion.R \
-#     ingestion_program \
-#     input_data \
-#     test_output/res \
-#     starting_kit/submissions
-
-# Rscript scoring_program/scoring.R  \
-#     test_output \
-#     test_output \
-#     scoring_program
-
 
 docker_name=python
 
