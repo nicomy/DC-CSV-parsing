@@ -25,13 +25,8 @@ conda install faker pyyaml
 ```
 
 
-genereate CSVs and grountruth.json
 
 
-```
-cd data 
-python generate_data.py
-```
 
 test localy 
 ```
@@ -45,6 +40,13 @@ generate bundle
 bash gen_bundle.sh
 ```
 
+
+### genereate CSVs and grountruth.json
+
+```
+cd data 
+python generate_data.py
+```
 
 ## Shitify datas
 
