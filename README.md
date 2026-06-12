@@ -41,7 +41,7 @@ bash gen_bundle.sh
 ```
 
 
-### genereate CSVs and grountruth.json
+### Genereate only the data CSVs and grountruth.json
 
 ```
 cd data 
