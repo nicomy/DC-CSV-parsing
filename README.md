@@ -6,9 +6,17 @@
 ## Getting started
 
 
+Choose between Conda or pyenv 
 
 
-install env.  
+### Install with pyenv (need of python3.12)
+```
+python3 -m venv dc_csv_parsing
+source dc_csv_parsing/bin/activate
+pip install faker pyyaml
+```
+
+### Install env with conda
 
 ```
 conda create -n gdc_env
